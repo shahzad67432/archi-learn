@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Providers from '@/components/Providers'
 
 export const metadata: Metadata = {
   title: 'Archi.learn — Master System Design Through Play',
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
