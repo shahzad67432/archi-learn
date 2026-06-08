@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Providers from '@/components/Providers'
 import Nav from '@/components/layout/Nav'
+import PageTransition from '@/components/layout/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Archi.learn — Master System Design Through Play',
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <Nav />
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </Providers>
       </body>
     </html>
