@@ -555,7 +555,7 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
             className="flex-shrink-0 flex flex-col pb-[clamp(8px,1.5vw,16px)]"
           style={{
               borderTop: '0.5px solid rgba(0,0,0,0.07)',
-              paddingTop: 'clamp(14px, 2.5vw, 24px)',
+              paddingTop: 'clamp(28px, 5vw, 48px)',
               gap: 5,
           }}
           initial={{ opacity: 0 }}
