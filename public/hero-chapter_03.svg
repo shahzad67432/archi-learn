@@ -1,0 +1,92 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#FFFBF7"/>
+
+  <!-- Ground platform (wider) -->
+  <polygon points="40,168 100,146 160,168 100,190" fill="#EDE3D5" stroke="#1A1A1A" stroke-width="1.2"/>
+  <polygon points="100,190 160,168 160,180 100,202" fill="#C4B49E" stroke="#1A1A1A" stroke-width="1.2"/>
+  <polygon points="40,168 100,190 100,202 40,180" fill="#D4C6B2" stroke="#1A1A1A" stroke-width="1.2"/>
+
+  <!-- Roots -->
+  <path d="M96,164 Q82,172 76,176" fill="none" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M104,164 Q118,172 124,176" fill="none" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M100,166 Q100,178 96,182" fill="none" stroke="#1A1A1A" stroke-width="0.8" stroke-linecap="round"/>
+  <path d="M98,166 Q85,176 80,180" fill="none" stroke="#1A1A1A" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Trunk -->
+  <polygon points="94,96 100,92 106,96 100,100" fill="#EDE3D5" stroke="#1A1A1A" stroke-width="0.8"/>
+  <polygon points="100,100 106,96 106,167 100,171" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="0.8"/>
+  <polygon points="94,96 100,100 100,171 94,167" fill="#2A2A2A" stroke="#1A1A1A" stroke-width="0.8"/>
+
+  <!-- Trunk texture -->
+  <line x1="97" y1="120" x2="103" y2="120" stroke="#EDE3D5" stroke-width="0.5" opacity="0.15"/>
+  <line x1="97" y1="140" x2="103" y2="140" stroke="#EDE3D5" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Branch lower left -->
+  <path d="M96,130 Q80,124 72,114" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Branch lower right -->
+  <path d="M104,125 Q120,119 128,109" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Branch upper left -->
+  <path d="M97,112 Q86,106 78,98" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Branch upper right -->
+  <path d="M103,107 Q114,101 122,93" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Leaf clusters lower -->
+  <circle cx="66" cy="110" r="10" fill="#FF6B2B" opacity="0.15"/>
+  <circle cx="64" cy="106" r="7" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="69" cy="108" r="5" fill="#FF6B2B" opacity="0.8"/>
+  <circle cx="62" cy="112" r="4" fill="#FF6B2B"/>
+
+  <circle cx="132" cy="104" r="10" fill="#FF6B2B" opacity="0.15"/>
+  <circle cx="134" cy="100" r="7" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="130" cy="102" r="5" fill="#FF6B2B" opacity="0.8"/>
+  <circle cx="136" cy="106" r="4" fill="#FF6B2B"/>
+
+  <!-- Leaf clusters upper -->
+  <circle cx="72" cy="94" r="9" fill="#FF6B2B" opacity="0.15"/>
+  <circle cx="70" cy="91" r="6" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="74" cy="93" r="4" fill="#FF6B2B" opacity="0.8"/>
+  <circle cx="68" cy="96" r="3" fill="#FF6B2B"/>
+
+  <circle cx="126" cy="88" r="9" fill="#FF6B2B" opacity="0.15"/>
+  <circle cx="128" cy="85" r="6" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="124" cy="87" r="4" fill="#FF6B2B" opacity="0.8"/>
+
+  <!-- Top canopy -->
+  <circle cx="100" cy="90" r="10" fill="#FF6B2B" opacity="0.15"/>
+  <circle cx="96" cy="86" r="7" fill="#FF6B2B" opacity="0.4"/>
+  <circle cx="104" cy="86" r="7" fill="#FF6B2B" opacity="0.4"/>
+  <circle cx="100" cy="84" r="5" fill="#FF6B2B" opacity="0.7"/>
+  <circle cx="97" cy="89" r="4" fill="#FF6B2B"/>
+  <circle cx="103" cy="89" r="4" fill="#FF6B2B"/>
+
+  <!-- Flower buds (tiny orange dots) -->
+  <circle cx="58" cy="108" r="2" fill="#FF6B2B"/>
+  <circle cx="72" cy="97" r="1.8" fill="#FF6B2B"/>
+  <circle cx="130" cy="102" r="2" fill="#FF6B2B"/>
+  <circle cx="122" cy="90" r="1.5" fill="#FF6B2B"/>
+
+  <!-- Dashed connector line between branches (system design metaphor) -->
+  <line x1="72" y1="114" x2="128" y2="109" stroke="#FF6B2B" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.6"/>
+
+  <!-- Mascot on left, reaching up to connect -->
+  <ellipse cx="58" cy="152" rx="9" ry="11" fill="#FF6B2B" stroke="#1A1A1A" stroke-width="1"/>
+  <!-- Eyes looking up -->
+  <ellipse cx="55" cy="149" rx="2.5" ry="2.5" fill="#fff" stroke="#1A1A1A" stroke-width="0.4"/>
+  <ellipse cx="61" cy="149" rx="2.5" ry="2.5" fill="#fff" stroke="#1A1A1A" stroke-width="0.4"/>
+  <circle cx="56" cy="149" r="1.2" fill="#1A1A1A"/>
+  <circle cx="62" cy="149" r="1.2" fill="#1A1A1A"/>
+  <!-- Determined smile -->
+  <path d="M56,155 Q58,157 60,155" fill="none" stroke="#1A1A1A" stroke-width="0.7" stroke-linecap="round"/>
+  <!-- Arm reaching up toward dashed line -->
+  <path d="M62,145 Q72,138 78,130" fill="none" stroke="#FF6B2B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M62,145 Q72,138 78,130" fill="none" stroke="#1A1A1A" stroke-width="0.7" stroke-linecap="round"/>
+  <!-- Other arm -->
+  <path d="M54,148 Q48,144 46,138" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M54,148 Q48,144 46,138" fill="none" stroke="#1A1A1A" stroke-width="0.6" stroke-linecap="round"/>
+
+  <!-- Blueprint corner -->
+  <path d="M16,16 L16,24 L24,24" fill="none" stroke="#C4B49E" stroke-width="0.8"/>
+
+  <!-- Label -->
+  <text x="16" y="188" fill="#C4B49E" font-family="'DM Sans', sans-serif" font-size="7">● 03 — Branch</text>
+</svg>

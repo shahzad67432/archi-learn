@@ -1,0 +1,63 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#FFFBF7"/>
+
+  <!-- Ground platform (slightly wider) -->
+  <polygon points="50,165 100,145 150,165 100,185" fill="#EDE3D5" stroke="#1A1A1A" stroke-width="1.2"/>
+  <polygon points="100,185 150,165 150,177 100,197" fill="#C4B49E" stroke="#1A1A1A" stroke-width="1.2"/>
+  <polygon points="50,165 100,185 100,197 50,177" fill="#D4C6B2" stroke="#1A1A1A" stroke-width="1.2"/>
+
+  <!-- Roots -->
+  <path d="M98,162 Q85,168 80,170" fill="none" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M102,162 Q115,168 120,170" fill="none" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M100,164 Q100,172 98,175" fill="none" stroke="#1A1A1A" stroke-width="0.8" stroke-linecap="round"/>
+
+  <!-- Tree trunk -->
+  <polygon points="96,130 100,127 104,130 100,133" fill="#EDE3D5" stroke="#1A1A1A" stroke-width="0.8"/>
+  <polygon points="100,133 104,130 104,162 100,165" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="0.8"/>
+  <polygon points="96,130 100,133 100,165 96,162" fill="#2A2A2A" stroke="#1A1A1A" stroke-width="0.8"/>
+
+  <!-- Branch left -->
+  <path d="M97,140 Q88,136 84,130" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Branch right -->
+  <path d="M103,135 Q112,131 116,125" fill="none" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Leaf clusters -->
+  <circle cx="80" cy="128" r="8" fill="#FF6B2B" opacity="0.2"/>
+  <circle cx="78" cy="125" r="5" fill="#FF6B2B" opacity="0.6"/>
+  <circle cx="83" cy="127" r="4" fill="#FF6B2B" opacity="0.8"/>
+
+  <circle cx="118" cy="122" r="8" fill="#FF6B2B" opacity="0.2"/>
+  <circle cx="120" cy="119" r="5" fill="#FF6B2B" opacity="0.6"/>
+  <circle cx="116" cy="121" r="4" fill="#FF6B2B" opacity="0.8"/>
+
+  <!-- Top leaves -->
+  <circle cx="100" cy="124" r="9" fill="#FF6B2B" opacity="0.2"/>
+  <circle cx="98" cy="121" r="6" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="102" cy="121" r="6" fill="#FF6B2B" opacity="0.5"/>
+  <circle cx="100" cy="120" r="4" fill="#FF6B2B"/>
+
+  <!-- Mascot sitting right side, reading -->
+  <ellipse cx="130" cy="156" rx="9" ry="11" fill="#FF6B2B" stroke="#1A1A1A" stroke-width="1"/>
+  <!-- Eyes looking at book -->
+  <ellipse cx="127" cy="153" rx="2.5" ry="2.5" fill="#fff" stroke="#1A1A1A" stroke-width="0.4"/>
+  <ellipse cx="133" cy="153" rx="2.5" ry="2.5" fill="#fff" stroke="#1A1A1A" stroke-width="0.4"/>
+  <circle cx="128" cy="153" r="1.2" fill="#1A1A1A"/>
+  <circle cx="134" cy="153" r="1.2" fill="#1A1A1A"/>
+  <!-- Smile -->
+  <path d="M128,158 Q130,160 132,158" fill="none" stroke="#1A1A1A" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- Book in front -->
+  <rect x="125" y="160" width="10" height="7" rx="1" fill="#EDE3D5" stroke="#1A1A1A" stroke-width="0.7"/>
+  <line x1="130" y1="160" x2="130" y2="167" stroke="#1A1A1A" stroke-width="0.7"/>
+  <!-- Arms holding book -->
+  <path d="M123,158 Q124,162 126,162" fill="none" stroke="#FF6B2B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M123,158 Q124,162 126,162" fill="none" stroke="#1A1A1A" stroke-width="0.7" stroke-linecap="round"/>
+  <path d="M137,158 Q136,162 134,162" fill="none" stroke="#FF6B2B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M137,158 Q136,162 134,162" fill="none" stroke="#1A1A1A" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- Blueprint corner -->
+  <path d="M16,16 L16,24 L24,24" fill="none" stroke="#C4B49E" stroke-width="0.8"/>
+
+  <!-- Label -->
+  <text x="16" y="188" fill="#C4B49E" font-family="'DM Sans', sans-serif" font-size="7">● 02 — Root</text>
+</svg>

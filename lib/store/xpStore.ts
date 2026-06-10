@@ -17,7 +17,9 @@ const calculateLevel = (xp: number): Level => {
 interface XPState extends XPStore {
   previousLevel: Level
   justLeveledUp: boolean
+  completedConcepts: string[]
   clearLevelUp: () => void
+  markConceptComplete: (slug: string, xp: number) => void
 }
 
 export const useXPStore = create<XPState>()(
@@ -27,6 +29,7 @@ export const useXPStore = create<XPState>()(
       level: 'Apprentice',
       previousLevel: 'Apprentice',
       conceptsUnlocked: [],
+      completedConcepts: [],
       justLeveledUp: false,
 
       addXP: (amount: number) => {
@@ -51,6 +54,13 @@ export const useXPStore = create<XPState>()(
       },
 
       clearLevelUp: () => set({ justLeveledUp: false }),
+
+      markConceptComplete: (slug: string, xp: number) => {
+        const { completedConcepts } = get()
+        if (completedConcepts.includes(slug)) return
+        set({ completedConcepts: [...completedConcepts, slug] })
+        get().addXP(xp)
+      },
     }),
     {
       name: 'archi-xp-storage',
@@ -58,6 +68,7 @@ export const useXPStore = create<XPState>()(
         totalXP: state.totalXP,
         level: state.level,
         conceptsUnlocked: state.conceptsUnlocked,
+        completedConcepts: state.completedConcepts,
       }),
     }
   )
