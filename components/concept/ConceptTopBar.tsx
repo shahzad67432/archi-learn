@@ -45,7 +45,7 @@ export default function ConceptTopBar({
           textDecoration: 'none',
           background: '#F3F0EB',
           borderRadius: 8,
-          padding: '6px 12px',
+          padding: '6px 8px 6px 12px',
           fontSize: 13,
           color: '#78716C',
           fontWeight: 500,
@@ -54,14 +54,16 @@ export default function ConceptTopBar({
           alignItems: 'center',
           gap: 4,
           transition: 'background 0.15s',
+          flexShrink: 0,
         }}
         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#E8E4DD' }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#F3F0EB' }}
       >
-        ← Concepts
+        <span className="hidden sm:inline">← Concepts</span>
+        <span className="sm:hidden">←</span>
       </Link>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
+      <div className="min-w-0" style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
         <div
           style={{
             width: 8,
