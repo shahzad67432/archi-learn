@@ -361,19 +361,20 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
         display: 'grid',
         paddingTop: '52px',
       }}
-      className="lg:grid-cols-[1fr_1.15fr] grid-cols-1"
+      className="lg:grid-cols-[1fr_1fr] grid-cols-1"
     >
       {/* LEFT COLUMN */}
       <div
         style={{ borderRight: '0.5px solid rgba(22,163,74,0.15)' }}
         className="flex flex-col min-h-0 overflow-y-auto lg:overflow-hidden
+                   [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
                    px-[clamp(16px,2.5vw,28px)]
                    py-[clamp(12px,3vw,40px)]
                    lg:border-r lg:border-b-0
                    border-b border-r-0"
       >
         {/* Scrollable top section */}
-        <div className="lg:flex-1 lg:overflow-y-auto min-h-0">
+        <div className="lg:flex-1 lg:overflow-y-auto min-h-0 lg:mb-0 pb-38">
         <div className="flex flex-col gap-[clamp(8px,1.2vw,14px)]">
 
           {/* Eyebrow */}
@@ -677,7 +678,6 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
               fontSize: 12,
               color: concept.color.accent,
               cursor: 'pointer',
-              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 6,
