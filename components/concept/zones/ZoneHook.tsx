@@ -14,15 +14,14 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
 
   const rightColumnContent = (
     <>
-      {/* Main tunnel card */}
+      {/* Real-Time Layer — colorful architectural illustration */}
       <motion.div
         className="flex flex-col min-h-0"
         style={{
           flex: 5,
-          background: concept.color.bg,
-          border: `0.5px solid ${concept.color.border}`,
+          background: '#1C1917',
           borderRadius: 14,
-          padding: 'clamp(14px, 2vw, 24px)',
+          padding: 'clamp(14px, 2vw, 20px)',
         }}
         initial={{ opacity: 0, x: 16 }}
         animate={{ opacity: 1, x: 0 }}
@@ -34,111 +33,128 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
             fontWeight: 700,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: concept.color.accent,
-            marginBottom: 8,
+            color: '#C4B5FD',
+            marginBottom: 6,
             display: 'block',
           }}
         >
-          The WebSocket tunnel
+          The Real-Time Layer
         </span>
 
-        {/* SVG tunnel diagram */}
+        {/* SVG illustration */}
         <svg
           style={{ flex: 1, width: '100%', minHeight: 0 }}
-          viewBox="0 0 340 140"
+          viewBox="0 0 340 190"
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5"
-              markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-              <path d="M2 1L8 5L2 9" fill="none"
-                stroke={concept.color.accent}
-                stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round"/>
-            </marker>
-            <marker id="am" viewBox="0 0 10 10" refX="8" refY="5"
-              markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-              <path d="M2 1L8 5L2 9" fill="none"
-                stroke="#A8A29E" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round"/>
-            </marker>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6D28D9" />
+              <stop offset="50%" stopColor="#C4B5FD" />
+              <stop offset="100%" stopColor="#6D28D9" />
+            </linearGradient>
           </defs>
 
-          {/* HTTP upgrade label */}
-          <text x="170" y="18" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fill="#A8A29E" fontStyle="italic">
-            HTTP 101 upgrade — happens once, then HTTP is gone
-          </text>
-          <line x1="60" y1="26" x2="280" y2="26"
-            stroke="#A8A29E" strokeWidth="0.7"
-            strokeDasharray="3,2" markerEnd="url(#am)"/>
-
           {/* CLIENT box */}
-          <rect x="10" y="52" width="72" height="42" rx="8"
-            fill="white" stroke={concept.color.border}
-            strokeWidth="1"/>
-          <text x="46" y="70" textAnchor="middle"
-            fontFamily="var(--font-syne)" fontSize="11"
-            fontWeight="700" fill={concept.color.accent}>
+          <rect x="12" y="28" width="95" height="38" rx="6"
+            fill="#FFFBF7" stroke="#6D28D9" strokeWidth="0.8" />
+          <text x="59.5" y="46" textAnchor="middle"
+            fontFamily="var(--font-syne)" fontSize="10" fontWeight="700" fill="#6D28D9">
             CLIENT
           </text>
-          <text x="46" y="84" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fill="#A8A29E">
+          <text x="59.5" y="57" textAnchor="middle"
+            fontFamily="var(--font-dm-sans)" fontSize="8" fill="#A8A29E">
             browser
           </text>
 
           {/* SERVER box */}
-          <rect x="258" y="52" width="72" height="42" rx="8"
-            fill="white" stroke={concept.color.border}
-            strokeWidth="1"/>
-          <text x="294" y="70" textAnchor="middle"
-            fontFamily="var(--font-syne)" fontSize="11"
-            fontWeight="700" fill={concept.color.accent}>
+          <rect x="233" y="28" width="95" height="38" rx="6"
+            fill="#FFFBF7" stroke="#6D28D9" strokeWidth="0.8" />
+          <text x="280.5" y="46" textAnchor="middle"
+            fontFamily="var(--font-syne)" fontSize="10" fontWeight="700" fill="#6D28D9">
             SERVER
           </text>
-          <text x="294" y="84" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fill="#A8A29E">
+          <text x="280.5" y="57" textAnchor="middle"
+            fontFamily="var(--font-dm-sans)" fontSize="8" fill="#A8A29E">
             backend
           </text>
 
-          {/* Persistent tunnel pipe */}
-          <rect x="82" y="62" width="176" height="22" rx="11"
-            fill={concept.color.bg}
-            stroke={concept.color.accent} strokeWidth="1.5"/>
-          <text x="170" y="77" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fontWeight="600" fill={concept.color.accent}>
-            persistent tunnel — stays open
+          {/* Dashed lines from boxes down to bridge */}
+          <line x1="59.5" y1="66" x2="59.5" y2="82"
+            stroke="#6D28D9" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
+          <line x1="280.5" y1="66" x2="280.5" y2="82"
+            stroke="#6D28D9" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
+
+          {/* Glowing connection dots */}
+          <circle cx="59.5" cy="82" r="3" fill="#ADFA1D" filter="url(#glow)" />
+          <circle cx="280.5" cy="82" r="3" fill="#ADFA1D" filter="url(#glow)" />
+
+          {/* The WebSocket Bridge */}
+          <rect x="12" y="82" width="316" height="40" rx="10"
+            fill="#F5F3FF" stroke="url(#bridgeGrad)" strokeWidth="1.5" />
+          <rect x="14" y="84" width="312" height="36" rx="8"
+            fill="none" stroke="#C4B5FD" strokeWidth="0.5" opacity="0.5" />
+
+          <text x="170" y="107" textAnchor="middle"
+            fontFamily="var(--font-dm-sans)" fontSize="9" fontWeight="600" fill="#6D28D9">
+            persistent tunnel — always open
           </text>
 
-          {/* Bidirectional arrows */}
-          <line x1="86" y1="105" x2="200" y2="105"
-            stroke={concept.color.accent} strokeWidth="1.5"
-            markerEnd="url(#ag)"/>
-          <text x="143" y="100" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fill={concept.color.accent}>
-            comment sent →
-          </text>
+          {/* Animated data packets left→right */}
+          <motion.circle
+            cx={40} cy={95} r={3} fill="#ADFA1D"
+            animate={{ cx: [40, 300] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.circle
+            cx={40} cy={103} r={2.5} fill="#6D28D9"
+            animate={{ cx: [40, 300] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: "linear", delay: 1.2 }}
+          />
 
-          <line x1="254" y1="120" x2="140" y2="120"
-            stroke={concept.color.accent} strokeWidth="1.5"
-            markerEnd="url(#ag)"/>
-          <text x="197" y="133" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9"
-            fill={concept.color.accent}>
-            ← new post pushed
-          </text>
+          {/* Animated data packets right→left */}
+          <motion.circle
+            cx={300} cy={95} r={3} fill="#C4B5FD"
+            animate={{ cx: [300, 40] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0.6 }}
+          />
+          <motion.circle
+            cx={300} cy={103} r={2} fill="#ADFA1D"
+            animate={{ cx: [300, 40] }}
+            transition={{ duration: 3.2, repeat: Infinity, ease: "linear", delay: 1.8 }}
+          />
 
-          {/* Caption */}
-          <text x="72" y="132"
-            fontFamily="var(--font-dm-sans)" fontSize="8.5"
+          {/* Return dashed lines below bridge */}
+          <line x1="280.5" y1="122" x2="280.5" y2="138"
+            stroke="#C4B5FD" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
+          <line x1="59.5" y1="122" x2="59.5" y2="138"
+            stroke="#C4B5FD" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
+
+          {/* Return connection dots */}
+          <circle cx="59.5" cy="138" r="2.5" fill="#C4B5FD" />
+          <circle cx="280.5" cy="138" r="2.5" fill="#C4B5FD" />
+
+          {/* Bottom label */}
+          <text x="170" y="150" textAnchor="middle"
+            fontFamily="var(--font-dm-sans)" fontSize="8"
             fill="#A8A29E" fontStyle="italic">
-            simultaneously — no asking permission
+            bidirectional — simultaneous send & receive
           </text>
+
+          {/* Architectural layer lines */}
+          <line x1="12" y1="23" x2="328" y2="23"
+            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
+          <line x1="12" y1="72" x2="328" y2="72"
+            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
+          <line x1="12" y1="130" x2="328" y2="130"
+            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
         </svg>
 
         <span
@@ -365,7 +381,6 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
     >
       {/* LEFT COLUMN */}
       <div
-        style={{ borderRight: '0.5px solid rgba(22,163,74,0.15)' }}
         className="flex flex-col min-h-0 overflow-y-auto lg:overflow-hidden
                    [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
                    px-[clamp(16px,2.5vw,28px)]
