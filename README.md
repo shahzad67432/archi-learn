@@ -1,7 +1,7 @@
 # Archi.learn — Master System Design Through Play
 
 <p align="center">
-  <img src="/hero-concept_02.svg" width="420" alt="Tree of Knowledge" />
+  <img src="/public/hero-concept_02.svg" width="420" alt="Tree of Knowledge" />
 </p>
 
 Not another article. Not another video. Archi.learn is an interactive, gamified platform where you learn system design by moving through zones — **The Problem → How It Works → Hard Parts → Try It → Quiz** — one scroll-snap at a time. Earn XP, level up your mascot, and unlock harder concepts as you go.
@@ -12,19 +12,19 @@ Every scene is hand-crafted in isometric SVG with a warm orange and cream palett
 
 <table>
   <tr>
-    <td width="160" align="center"><img src="/hero-chapter_01.svg" width="140" alt="Seed" /></td>
+    <td width="160" align="center"><img src="/public/hero-chapter_01.svg" width="140" alt="Seed" /></td>
     <td><strong>Seed</strong> — A tiny sprout pushes through soil underground. A watering can rests beside it, a measuring stick tracks its height, raindrops fall from a soft sun above, and a seed packet waits nearby.<br/><em>Curiosity — the beginning.</em></td>
   </tr>
   <tr>
-    <td width="160" align="center"><img src="/hero-chapter_02.svg" width="140" alt="Root" /></td>
+    <td width="160" align="center"><img src="/public/hero-chapter_02.svg" width="140" alt="Root" /></td>
     <td><strong>Root</strong> — Roots spread deep below the platform. A small trunk rises with just a few leaf clusters. The foundation is being built.<br/><em>Understanding the fundamentals.</em></td>
   </tr>
   <tr>
-    <td width="160" align="center"><img src="/hero-chapter_03.svg" width="140" alt="Branch" /></td>
+    <td width="160" align="center"><img src="/public/hero-chapter_03.svg" width="140" alt="Branch" /></td>
     <td><strong>Branch</strong> — Multiple branches reach outward with flower buds forming. A dashed connector line runs between branches — the system design metaphor.<br/><em>Making connections.</em></td>
   </tr>
   <tr>
-    <td width="160" align="center"><img src="/hero-chapter_04.svg" width="140" alt="Bloom" /></td>
+    <td width="160" align="center"><img src="/public/hero-chapter_04.svg" width="140" alt="Bloom" /></td>
     <td><strong>Bloom</strong> — A full canopy of leaves, flowers, fruit, a butterfly, sparkles, and a dashed network across every branch.<br/><em>Mastery — everything connects.</em></td>
   </tr>
 </table>
@@ -46,7 +46,7 @@ Archi is the orange mascot that travels with you through every scene — pointin
 4. **Earn XP** — complete zones, ace quizzes, level up
 
 <p align="center">
-  <img src="/hero-design.png" width="700" alt="Archi.learn concepts grid" style="border-radius: 12px;" />
+  <img src="/public/hero-design.png" width="700" alt="Archi.learn concepts grid" style="border-radius: 12px;" />
 </p>
 
 ## Tech Stack
