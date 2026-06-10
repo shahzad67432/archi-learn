@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import type { Concept } from '@/data/concepts'
+import ZoneHookDiagram from '@/components/concept/scenes/ZoneHookDiagram'
 
 interface Props {
   concept: Concept
@@ -14,12 +15,11 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
 
   const rightColumnContent = (
     <>
-      {/* Real-Time Layer — colorful architectural illustration */}
+      {/* Real-Time Layer — isometric 2D architectural diagram */}
       <motion.div
         className="flex flex-col min-h-0"
         style={{
           flex: 5,
-          background: '#1C1917',
           borderRadius: 14,
           padding: 'clamp(14px, 2vw, 20px)',
         }}
@@ -41,135 +41,15 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
           The Real-Time Layer
         </span>
 
-        {/* SVG illustration */}
-        <svg
-          style={{ flex: 1, width: '100%', minHeight: 0 }}
-          viewBox="0 0 340 190"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <defs>
-            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#6D28D9" />
-              <stop offset="50%" stopColor="#C4B5FD" />
-              <stop offset="100%" stopColor="#6D28D9" />
-            </linearGradient>
-          </defs>
-
-          {/* CLIENT box */}
-          <rect x="12" y="28" width="95" height="38" rx="6"
-            fill="#FFFBF7" stroke="#6D28D9" strokeWidth="0.8" />
-          <text x="59.5" y="46" textAnchor="middle"
-            fontFamily="var(--font-syne)" fontSize="10" fontWeight="700" fill="#6D28D9">
-            CLIENT
-          </text>
-          <text x="59.5" y="57" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="8" fill="#A8A29E">
-            browser
-          </text>
-
-          {/* SERVER box */}
-          <rect x="233" y="28" width="95" height="38" rx="6"
-            fill="#FFFBF7" stroke="#6D28D9" strokeWidth="0.8" />
-          <text x="280.5" y="46" textAnchor="middle"
-            fontFamily="var(--font-syne)" fontSize="10" fontWeight="700" fill="#6D28D9">
-            SERVER
-          </text>
-          <text x="280.5" y="57" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="8" fill="#A8A29E">
-            backend
-          </text>
-
-          {/* Dashed lines from boxes down to bridge */}
-          <line x1="59.5" y1="66" x2="59.5" y2="82"
-            stroke="#6D28D9" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
-          <line x1="280.5" y1="66" x2="280.5" y2="82"
-            stroke="#6D28D9" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
-
-          {/* Glowing connection dots */}
-          <circle cx="59.5" cy="82" r="3" fill="#ADFA1D" filter="url(#glow)" />
-          <circle cx="280.5" cy="82" r="3" fill="#ADFA1D" filter="url(#glow)" />
-
-          {/* The WebSocket Bridge */}
-          <rect x="12" y="82" width="316" height="40" rx="10"
-            fill="#F5F3FF" stroke="url(#bridgeGrad)" strokeWidth="1.5" />
-          <rect x="14" y="84" width="312" height="36" rx="8"
-            fill="none" stroke="#C4B5FD" strokeWidth="0.5" opacity="0.5" />
-
-          <text x="170" y="107" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="9" fontWeight="600" fill="#6D28D9">
-            persistent tunnel — always open
-          </text>
-
-          {/* Animated data packets left→right */}
-          <motion.circle
-            cx={40} cy={95} r={3} fill="#ADFA1D"
-            animate={{ cx: [40, 300] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.circle
-            cx={40} cy={103} r={2.5} fill="#6D28D9"
-            animate={{ cx: [40, 300] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "linear", delay: 1.2 }}
-          />
-
-          {/* Animated data packets right→left */}
-          <motion.circle
-            cx={300} cy={95} r={3} fill="#C4B5FD"
-            animate={{ cx: [300, 40] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0.6 }}
-          />
-          <motion.circle
-            cx={300} cy={103} r={2} fill="#ADFA1D"
-            animate={{ cx: [300, 40] }}
-            transition={{ duration: 3.2, repeat: Infinity, ease: "linear", delay: 1.8 }}
-          />
-
-          {/* Return dashed lines below bridge */}
-          <line x1="280.5" y1="122" x2="280.5" y2="138"
-            stroke="#C4B5FD" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
-          <line x1="59.5" y1="122" x2="59.5" y2="138"
-            stroke="#C4B5FD" strokeWidth="0.8" strokeDasharray="3,2" opacity="0.4" />
-
-          {/* Return connection dots */}
-          <circle cx="59.5" cy="138" r="2.5" fill="#C4B5FD" />
-          <circle cx="280.5" cy="138" r="2.5" fill="#C4B5FD" />
-
-          {/* Bottom label */}
-          <text x="170" y="150" textAnchor="middle"
-            fontFamily="var(--font-dm-sans)" fontSize="8"
-            fill="#A8A29E" fontStyle="italic">
-            bidirectional — simultaneous send & receive
-          </text>
-
-          {/* Architectural layer lines */}
-          <line x1="12" y1="23" x2="328" y2="23"
-            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
-          <line x1="12" y1="72" x2="328" y2="72"
-            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
-          <line x1="12" y1="130" x2="328" y2="130"
-            stroke="#6D28D9" strokeWidth="0.5" opacity="0.15" />
-        </svg>
-
-        <span
+        <div
           style={{
-            fontSize: 10,
-            color: '#A8A29E',
-            fontStyle: 'italic',
-            textAlign: 'center',
-            marginTop: 6,
-            fontWeight: 300,
-            display: 'block',
+            flex: 1,
+            minHeight: 0,
+            position: 'relative',
           }}
         >
-          Both sides speak freely — server pushes without being asked
-        </span>
+          <ZoneHookDiagram accentColor={concept.color.accent} />
+        </div>
       </motion.div>
 
       {/* Bottom panels grid */}
@@ -385,11 +265,11 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
                    [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
                    px-[clamp(16px,2.5vw,28px)]
                    py-[clamp(12px,3vw,40px)]
-                   lg:border-r lg:border-b-0
+                   lg:border-b-0
                    border-b border-r-0"
       >
         {/* Scrollable top section */}
-        <div className="lg:flex-1 lg:overflow-y-auto min-h-0 lg:mb-0 pb-38">
+        <div className="lg:flex-1 min-h-0 lg:mb-0 pb-38">
         <div className="flex flex-col gap-[clamp(8px,1.2vw,14px)]">
 
           {/* Eyebrow */}
