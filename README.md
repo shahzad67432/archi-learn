@@ -46,7 +46,7 @@ Archi is the orange mascot that travels with you through every scene — pointin
 4. **Earn XP** — complete zones, ace quizzes, level up
 
 <p align="center">
-  <img src="/public/hero-design.png" width="700" alt="Archi.learn concepts grid" style="border-radius: 12px;" />
+  <img src="/public/hero-concept_01.svg" width="700" alt="Archi.learn concepts grid" style="border-radius: 12px;" />
 </p>
 
 ## Tech Stack
