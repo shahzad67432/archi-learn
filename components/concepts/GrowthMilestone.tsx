@@ -1,4 +1,6 @@
 'use client'
+import { motion } from 'framer-motion'
+import { useDayCycle } from '@/lib/hooks/useDayCycle'
 
 interface Props {
   stage: 0 | 1 | 2 | 3
@@ -43,7 +45,7 @@ const DEFS: MilestoneDef[] = [
   },
 ]
 
-function SeedlingSVG({ accent }: { accent: string }) {
+function SeedlingSVG({ accent, shadowOffsetX, shadowLength, shadowOpacity }: { accent: string; shadowOffsetX: number; shadowLength: number; shadowOpacity: number }) {
   const cx = 280
   return (
     <g>
@@ -79,24 +81,35 @@ function SeedlingSVG({ accent }: { accent: string }) {
         ROOT ZONE
       </text>
 
+      <ellipse cx={cx + shadowOffsetX * 0.5} cy={90} rx={2 + shadowLength * 0.4} ry={2} fill="#1C1917" opacity={shadowOpacity} />
+
+      <path d={`M${cx},90 Q${cx + 2},105 ${cx},135`} fill="none" stroke="#8B7355" strokeWidth="1.8" strokeLinecap="round" />
+      <path d={`M${cx - 2},98 Q${cx - 18},103 ${cx - 20},113`} fill="none" stroke="#8B7355" strokeWidth="1" strokeLinecap="round" />
+      <path d={`M${cx + 2},100 Q${cx + 20},106 ${cx + 22},116`} fill="none" stroke="#8B7355" strokeWidth="1" strokeLinecap="round" />
+
+      {[cx - 15, cx + 12, cx - 3].map((gx, i) => (
+        <path key={`gs-${i}`}
+          d={`M${gx},90 Q${gx + (i % 2 === 0 ? -2 : 2)},85 ${gx + (i % 2 === 0 ? -3 : 3)},83`}
+          fill="none" stroke="#86EFAC" strokeWidth="0.6" strokeLinecap="round" opacity="0.35"
+        />
+      ))}
+
       <path d={`M${cx},90 Q${cx - 5},78 ${cx},66`} fill="none" stroke="#8B7355" strokeWidth="2" strokeLinecap="round" />
       <path d={`M${cx},66 Q${cx - 16},60 ${cx - 18},65 Q${cx - 10},68 ${cx},68`} fill={accent} opacity="0.8" />
       <path d={`M${cx},68 Q${cx + 16},62 ${cx + 18},67 Q${cx + 10},70 ${cx},70`} fill={accent} opacity="0.8" />
 
-      <path d={`M${cx},90 Q${cx + 2},105 ${cx},135`} fill="none" stroke="#8B7355" strokeWidth="1.8" strokeLinecap="round" />
-      <path d={`M${cx - 2},98 Q${cx - 18},103 ${cx - 22},113`} fill="none" stroke="#8B7355" strokeWidth="1" strokeLinecap="round" />
-      <path d={`M${cx + 2},100 Q${cx + 20},106 ${cx + 24},116`} fill="none" stroke="#8B7355" strokeWidth="1" strokeLinecap="round" />
-      <path d={`M${cx - 1},108 Q${cx - 15},110 ${cx - 18},120`} fill="none" stroke="#8B7355" strokeWidth="0.8" strokeLinecap="round" />
-      <path d={`M${cx + 1},110 Q${cx + 16},114 ${cx + 20},124`} fill="none" stroke="#8B7355" strokeWidth="0.8" strokeLinecap="round" />
-      <path d={`M${cx},118 Q${cx - 10},120 ${cx - 12},127`} fill="none" stroke="#8B7355" strokeWidth="0.6" strokeLinecap="round" />
-      <path d={`M${cx},120 Q${cx + 10},122 ${cx + 12},129`} fill="none" stroke="#8B7355" strokeWidth="0.6" strokeLinecap="round" />
-
       <circle cx={cx} cy={65} r="2" fill={accent} />
+      
+      <g opacity="0.12" fill="none" stroke="#C4B49E" strokeWidth="0.6">
+        <rect x={35} y={46} width={10} height={13} rx={1} />
+        <line x1={38} y1={50} x2={42} y2={50} />
+        <line x1={38} y1={53} x2={42} y2={53} />
+      </g>
     </g>
   )
 }
 
-function SaplingSVG({ accent }: { accent: string }) {
+function SaplingSVG({ accent, shadowOffsetX, shadowLength, shadowOpacity }: { accent: string; shadowOffsetX: number; shadowLength: number; shadowOpacity: number }) {
   const cx = 280
   return (
     <g>
@@ -118,6 +131,19 @@ function SaplingSVG({ accent }: { accent: string }) {
         HEIGHT
       </text>
 
+      <ellipse cx={cx + shadowOffsetX * 0.6} cy={95} rx={3 + shadowLength * 0.5} ry={2.5} fill="#1C1917" opacity={shadowOpacity} />
+
+      <path d={`M${cx},95 Q${cx + 2},108 ${cx},130`} fill="none" stroke="#8B7355" strokeWidth="2" strokeLinecap="round" />
+      <path d={`M${cx - 2},102 Q${cx - 20},106 ${cx - 22},116`} fill="none" stroke="#8B7355" strokeWidth="1.2" strokeLinecap="round" />
+      <path d={`M${cx + 2},104 Q${cx + 22},108 ${cx + 24},118`} fill="none" stroke="#8B7355" strokeWidth="1.2" strokeLinecap="round" />
+
+      {[cx - 20, cx + 18, cx - 5, cx + 6].map((gx, i) => (
+        <path key={`gs-${i}`}
+          d={`M${gx},95 Q${gx + (i % 2 === 0 ? -2 : 2)},90 ${gx + (i % 2 === 0 ? -3 : 3)},88`}
+          fill="none" stroke="#86EFAC" strokeWidth="0.7" strokeLinecap="round" opacity="0.3"
+        />
+      ))}
+
       <path d={`M${cx},95 Q${cx - 3},70 ${cx},45`} fill="none" stroke="#8B7355" strokeWidth="2.5" strokeLinecap="round" />
       <path d={`M${cx},65 Q${cx - 25},58 ${cx - 28},62`} fill="none" stroke="#8B7355" strokeWidth="2" strokeLinecap="round" />
       <path d={`M${cx},50 Q${cx + 22},42 ${cx + 26},46`} fill="none" stroke="#8B7355" strokeWidth="1.8" strokeLinecap="round" />
@@ -131,31 +157,39 @@ function SaplingSVG({ accent }: { accent: string }) {
       <ellipse cx={cx} cy={44} rx={7} ry={4.5} fill={accent} opacity="0.85" />
       <ellipse cx={cx - 2} cy={43} rx={3.5} ry={2} fill="#fff" opacity="0.15" />
 
-      <path d={`M${cx},95 Q${cx + 2},108 ${cx},130`} fill="none" stroke="#8B7355" strokeWidth="2" strokeLinecap="round" />
-      <path d={`M${cx - 2},102 Q${cx - 20},106 ${cx - 24},116`} fill="none" stroke="#8B7355" strokeWidth="1.2" strokeLinecap="round" />
-      <path d={`M${cx + 2},104 Q${cx + 22},108 ${cx + 26},118`} fill="none" stroke="#8B7355" strokeWidth="1.2" strokeLinecap="round" />
-      <path d={`M${cx - 1},112 Q${cx - 16},114 ${cx - 18},124`} fill="none" stroke="#8B7355" strokeWidth="0.8" strokeLinecap="round" />
-      <path d={`M${cx + 1},114 Q${cx + 16},116 ${cx + 18},126`} fill="none" stroke="#8B7355" strokeWidth="0.8" strokeLinecap="round" />
-      <path d={`M${cx},120 Q${cx - 8},122 ${cx - 10},129`} fill="none" stroke="#8B7355" strokeWidth="0.6" strokeLinecap="round" />
-      <path d={`M${cx},121 Q${cx + 8},123 ${cx + 10},130`} fill="none" stroke="#8B7355" strokeWidth="0.6" strokeLinecap="round" />
-
       <rect x={cx - 26} y={58} width={52} height={10} rx={2} fill="#1A1A1A" opacity="0.7" />
       <text x={cx} y={65} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize="5.5"
         fill={accent} fontWeight="600"
       >
         MULTI-DIRECTIONAL GROWTH
       </text>
+      
+      <g opacity="0.12" fill="none" stroke="#C4B49E" strokeWidth="0.6">
+        <ellipse cx={40} cy={52} rx={5} ry={2.5} />
+        <line x1={35} y1={52} x2={35} y2={58} />
+        <line x1={45} y1={52} x2={45} y2={58} />
+        <ellipse cx={40} cy={58} rx={5} ry={2.5} />
+      </g>
     </g>
   )
 }
 
-function TreeSVG({ accent }: { accent: string }) {
+function TreeSVG({ accent, shadowOffsetX, shadowLength, shadowOpacity }: { accent: string; shadowOffsetX: number; shadowLength: number; shadowOpacity: number }) {
   const cx = 280
   return (
     <g>
       <line x1={80} y1={100} x2={420} y2={100}
         stroke="#C4B49E" strokeWidth="0.6" strokeDasharray="3,4" opacity="0.35"
       />
+
+      <ellipse cx={cx + shadowOffsetX * 0.7} cy={100} rx={4 + shadowLength * 0.6} ry={3} fill="#1C1917" opacity={shadowOpacity} />
+
+      {[cx - 25, cx + 22, cx - 8, cx + 10].map((gx, i) => (
+        <path key={`gs-${i}`}
+          d={`M${gx},100 Q${gx + (i % 2 === 0 ? -2 : 2)},95 ${gx + (i % 2 === 0 ? -3 : 3)},93`}
+          fill="none" stroke="#22C55E" strokeWidth="0.7" strokeLinecap="round" opacity="0.3"
+        />
+      ))}
 
       <rect x={cx - 8} y={65} width={16} height={35} rx={3} fill="#8B7355" />
       <path d={`M${cx - 8},75 Q${cx - 35},65 ${cx - 40},70`} fill="none" stroke="#8B7355" strokeWidth="2.5" strokeLinecap="round" />
@@ -204,17 +238,34 @@ function TreeSVG({ accent }: { accent: string }) {
       >
         INTERCONNECTED SYSTEM
       </text>
+      
+      <g opacity="0.12" fill="none" stroke="#C4B49E" strokeWidth="0.6">
+        <circle cx={440} cy={52} r={1.5} />
+        <circle cx={450} cy={56} r={1.5} />
+        <circle cx={434} cy={58} r={1.5} />
+        <line x1={438} y1={53} x2={448} y2={55} />
+        <line x1={438} y1={53} x2={433} y2={57} />
+      </g>
     </g>
   )
 }
 
-function FruitTreeSVG({ accent }: { accent: string }) {
+function FruitTreeSVG({ accent, shadowOffsetX, shadowLength, shadowOpacity }: { accent: string; shadowOffsetX: number; shadowLength: number; shadowOpacity: number }) {
   const cx = 280
   return (
     <g>
       <line x1={80} y1={100} x2={420} y2={100}
         stroke="#C4B49E" strokeWidth="0.6" strokeDasharray="3,4" opacity="0.35"
       />
+
+      <ellipse cx={cx + shadowOffsetX * 0.7} cy={100} rx={4 + shadowLength * 0.6} ry={3} fill="#1C1917" opacity={shadowOpacity} />
+
+      {[cx - 28, cx + 25, cx - 10, cx + 12].map((gx, i) => (
+        <path key={`gs-${i}`}
+          d={`M${gx},100 Q${gx + (i % 2 === 0 ? -2 : 2)},95 ${gx + (i % 2 === 0 ? -3 : 3)},93`}
+          fill="none" stroke="#22C55E" strokeWidth="0.7" strokeLinecap="round" opacity="0.3"
+        />
+      ))}
 
       <rect x={cx - 9} y={60} width={18} height={40} rx={3} fill="#8B7355" />
       <path d={`M${cx - 9},70 Q${cx - 38},60 ${cx - 44},66`} fill="none" stroke="#8B7355" strokeWidth="2.8" strokeLinecap="round" />
@@ -255,12 +306,39 @@ function FruitTreeSVG({ accent }: { accent: string }) {
       >
         PRODUCTION READY
       </text>
+      
+      <g opacity="0.12" fill="none" stroke="#C4B49E" strokeWidth="0.6">
+        <polygon points="440,48 442,53 447,53 443,56 444,61 440,58 436,61 437,56 433,53 438,53" />
+      </g>
     </g>
   )
 }
 
+function Petals() {
+  const items = [
+    { cx: 90, dx: 12, delay: 0 },
+    { cx: 180, dx: -8, delay: 1.2 },
+    { cx: 310, dx: 15, delay: 2.8 },
+    { cx: 390, dx: -10, delay: 4.0 },
+    { cx: 260, dx: 6, delay: 5.5 },
+  ]
+  return items.map((p, i) => (
+    <motion.circle
+      key={i}
+      r={1.5}
+      fill="#FED7AA"
+      opacity={0.4}
+      cx={p.cx}
+      cy={-5}
+      animate={{ cy: 155, cx: p.cx + p.dx, opacity: 0 }}
+      transition={{ duration: 8, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+    />
+  ))
+}
+
 export default function GrowthMilestone({ stage }: Props) {
   const def = DEFS[stage]
+  const day = useDayCycle(stage)
 
   return (
     <div style={{ padding: '24px 0', position: 'relative' }}>
@@ -277,7 +355,43 @@ export default function GrowthMilestone({ stage }: Props) {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <filter id="sunGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="6" result="g" />
+            <feMerge>
+              <feMergeNode in="g" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
+
+        {day.sunElevation > 0 && (
+          <>
+            <circle cx={day.sunX} cy={day.sunY} r={day.sunGlowRadius} fill={day.sunFill} opacity={0.5} filter="url(#sunGlow)" />
+            <circle cx={day.sunX} cy={day.sunY} r={8} fill={day.sunFill} opacity={0.8} />
+          </>
+        )}
+
+        <g opacity={day.cloudOpacity} fill="#D6D3D1">
+          <path d="M70,32 Q85,24 100,30 Q115,22 130,30 Q142,35 130,40 L70,40 Z" />
+          <path d="M350,26 Q365,18 380,24 Q395,16 410,24 Q422,29 410,34 L350,34 Z" />
+          <path d="M250,18 Q262,12 274,17 Q286,11 298,17 Q308,21 298,25 L250,25 Z" opacity="0.6" />
+        </g>
+
+        <g stroke="#C4B49E" strokeWidth="0.5" fill="none" opacity="0.12">
+          <path d="M160,18 Q163,15 166,18 Q169,15 172,18" />
+          <path d="M174,15 Q177,12 180,15 Q183,12 186,15" opacity="0.08" />
+        </g>
+
+        {day.isNight && day.stars.map((s, i) => (
+          <circle key={i} cx={s.x} cy={s.y} r={0.6} fill="#fff" opacity={s.opacity} />
+        ))}
+
+        {day.isNight && day.moonY < 95 && (
+          <g>
+            <circle cx={day.moonX} cy={day.moonY} r={7} fill="#F5F5F4" opacity={0.5} filter="url(#sunGlow)" />
+            <circle cx={day.moonX + 2.5} cy={day.moonY - 1.5} r={6} fill="#1E3A5F" opacity={0.85} />
+          </g>
+        )}
 
         {[[12, 8], [468, 8], [12, 142], [468, 142]].map(([bx, by]) => (
           <path
@@ -300,10 +414,12 @@ export default function GrowthMilestone({ stage }: Props) {
           {def.plantLabel}
         </text>
 
-        {stage === 0 && <SeedlingSVG accent={def.accent} />}
-        {stage === 1 && <SaplingSVG accent={def.accent} />}
-        {stage === 2 && <TreeSVG accent={def.accent} />}
-        {stage === 3 && <FruitTreeSVG accent={def.accent} />}
+        {stage === 0 && <SeedlingSVG accent={def.accent} shadowOffsetX={day.shadowOffsetX} shadowLength={day.shadowLength} shadowOpacity={day.shadowOpacity} />}
+        {stage === 1 && <SaplingSVG accent={def.accent} shadowOffsetX={day.shadowOffsetX} shadowLength={day.shadowLength} shadowOpacity={day.shadowOpacity} />}
+        {stage === 2 && <TreeSVG accent={def.accent} shadowOffsetX={day.shadowOffsetX} shadowLength={day.shadowLength} shadowOpacity={day.shadowOpacity} />}
+        {stage === 3 && <FruitTreeSVG accent={def.accent} shadowOffsetX={day.shadowOffsetX} shadowLength={day.shadowLength} shadowOpacity={day.shadowOpacity} />}
+
+        <Petals />
 
         <rect x={80} y={124} width={320} height={22} rx={3} fill="#1A1A1A" opacity="0.85" />
         <text x={240} y={134} textAnchor="middle"

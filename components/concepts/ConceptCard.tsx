@@ -98,7 +98,7 @@ function PublishedCard({ concept, index }: { concept: Concept; index: number }) 
           <img
             src={concept.illustration}
             alt={concept.title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
           />
 
           {/* Overlaid number + difficulty */}

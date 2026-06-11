@@ -178,7 +178,7 @@ function OverheadStat({ accentColor }: { accentColor: string }) {
             display: 'block',
           }}
         >
-          less overhead per message — WebSocket frames are 14 bytes vs HTTP's 800.
+          less overhead per message — WebSocket frames are 14 bytes vs HTTP&apos;s 800.
         </span>
       </div>
     </div>
