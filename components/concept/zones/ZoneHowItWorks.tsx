@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
 
@@ -166,26 +166,31 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
           background: concept.color.bg + '30',
         }}
       >
-        {/* CANVAS PLACEHOLDER — replaced in next prompt */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: 'clamp(48px,8vw,96px)',
-            fontWeight: 800,
-            color: `${concept.color.accent}08`,
-            userSelect: 'none',
-          }}>
-            STEP {step + 1}
-          </span>
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'clamp(16px,3vw,40px)',
+            }}
+          >
+            {step === 0 && <StepTCPHandshake concept={concept} />}
+            {step === 1 && <StepTLS concept={concept} />}
+            {step === 2 && <StepHTTPUpgrade concept={concept} />}
+            {step === 3 && <Step101Response concept={concept} />}
+            {step === 4 && <StepHTTPDies concept={concept} />}
+            {step === 5 && <StepTunnelOpens concept={concept} />}
+            {step === 6 && <StepFreeFlow concept={concept} />}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* BOTTOM PANEL — step text + navigation */}
@@ -333,5 +338,338 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
         </div>
       </div>
     </div>
+  )
+}
+
+/* ── Shared SVG helpers ── */
+function ClientBox({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <g>
+      <rect x={40} y={80} width={90} height={50} rx={10} fill="white" stroke={concept.color.border} strokeWidth={1.5} />
+      <text x={85} y={106} textAnchor="middle" fontFamily="var(--font-syne)" fontWeight={700} fontSize={11} fill={a}>CLIENT</text>
+      <text x={85} y={120} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={9} fill="#A8A29E">browser</text>
+    </g>
+  )
+}
+
+function ServerBox({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <g>
+      <rect x={430} y={80} width={90} height={50} rx={10} fill="white" stroke={concept.color.border} strokeWidth={1.5} />
+      <text x={475} y={106} textAnchor="middle" fontFamily="var(--font-syne)" fontWeight={700} fontSize={11} fill={a}>SERVER</text>
+      <text x={475} y={120} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={9} fill="#A8A29E">backend</text>
+    </g>
+  )
+}
+
+/* ── Step 0: TCP Handshake ── */
+function StepTCPHandshake({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      <motion.g initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0 }}>
+        <line x1={132} y1={75} x2={428} y2={75} stroke="#F97316" strokeWidth={1.5} strokeDasharray="5,3" markerEnd="url(#ag-0)" />
+        <text x={280} y={70} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={10} fill="#F97316" fontWeight={600}>SYN</text>
+      </motion.g>
+      <motion.g initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+        <line x1={428} y1={100} x2={132} y2={100} stroke={a} strokeWidth={1.5} strokeDasharray="5,3" markerEnd="url(#ag-0)" />
+        <text x={280} y={95} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={10} fill={a} fontWeight={600}>SYN-ACK</text>
+      </motion.g>
+      <motion.g initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+        <line x1={132} y1={125} x2={428} y2={125} stroke="#F97316" strokeWidth={1.5} strokeDasharray="5,3" markerEnd="url(#ag-0)" />
+        <text x={280} y={120} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={10} fill="#F97316" fontWeight={600}>ACK</text>
+      </motion.g>
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        Raw TCP connection established — no encryption yet
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 1: TLS Encryption ── */
+function StepTLS({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* Dashed unsecured line */}
+      <motion.g initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.4, delay: 0.6 }}>
+        <line x1={132} y1={105} x2={428} y2={105} stroke="#A8A29E" strokeWidth={1} strokeDasharray="6,4" />
+        <text x={280} y={99} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={10} fill="#A8A29E" fontStyle="italic">unsecured</text>
+      </motion.g>
+      {/* Solid TLS secured line */}
+      <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.6 }}>
+        <line x1={132} y1={105} x2={428} y2={105} stroke={a} strokeWidth={2.5} />
+        <text x={280} y={99} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={10} fill={a} fontWeight={600}>TLS secured</text>
+      </motion.g>
+      {/* Lock icon */}
+      <motion.g
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 0.4 }}
+        style={{ originX: 260, originY: 82 }}
+      >
+        <circle cx={260} cy={82} r={10} fill={concept.color.bg} stroke={a} strokeWidth={1.5} />
+        <rect x={253} y={85} width={14} height={10} rx={2} fill={a} />
+      </motion.g>
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        wss:// encrypts everything — 1-2 extra round trips, once only
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 2: HTTP Upgrade Request ── */
+function StepHTTPUpgrade({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* Packet traveling client → server */}
+      <motion.g
+        initial={{ x: 140, opacity: 0 }}
+        animate={{ x: 290, opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.2, ease: 'easeInOut' }}
+      >
+        <rect x={0} y={95} width={160} height={36} rx={8} fill="white" stroke="#A8A29E" strokeWidth={1} />
+        <text x={80} y={110} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={9} fill="#44403C" fontWeight={500}>GET /ws/discussion/42 HTTP/1.1</text>
+        <text x={80} y={121} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={8} fill={a} fontWeight={600}>Upgrade: websocket</text>
+        <text x={80} y={130} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={8} fill={a} fontWeight={600}>Connection: Upgrade</text>
+      </motion.g>
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        Disguised as HTTP — firewalls let it through
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 3: 101 Switching Protocols ── */
+function Step101Response({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* Packet traveling server → client */}
+      <motion.g
+        initial={{ x: 290, opacity: 0 }}
+        animate={{ x: 140, opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.2, ease: 'easeInOut' }}
+      >
+        <rect x={0} y={95} width={150} height={36} rx={8} fill={concept.color.bg} stroke={concept.color.border} strokeWidth={1} />
+        <text x={75} y={110} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={9} fill={a} fontWeight={600}>HTTP/1.1 101 Switching</text>
+        <text x={75} y={121} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={9} fill={a} fontWeight={600}>Protocols</text>
+        <text x={75} y={130} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={8} fill="#A8A29E">Upgrade: websocket</text>
+      </motion.g>
+      {/* Checkmark */}
+      <motion.g
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.4 }}
+        style={{ originX: 85, originY: 70 }}
+      >
+        <circle cx={85} cy={70} r={14} fill={a} />
+        <text x={85} y={76} textAnchor="middle" fontFamily="var(--font-syne)" fontSize={14} fill="white" fontWeight={800}>✓</text>
+      </motion.g>
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        Last HTTP message ever — the protocol dies here
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 4: HTTP Dies ── */
+function StepHTTPDies({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* HTTP text fading */}
+      <motion.text
+        x={280} y={115} textAnchor="middle"
+        fontFamily="var(--font-syne)" fontWeight={800}
+        fontSize="clamp(32px,5vw,48px)" fill="#A8A29E"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0.15 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+      >
+        HTTP
+      </motion.text>
+      {/* Strikethrough line */}
+      <motion.line
+        x1={180} y1={115} x2={380} y2={115}
+        stroke="#EF4444" strokeWidth={2.5}
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      />
+      {/* GONE badge */}
+      <motion.g
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.1 }}
+        style={{ originX: 280, originY: 140 }}
+      >
+        <rect x={240} y={128} width={80} height={24} rx={12} fill="#FFF1F2" stroke="#FDA4AF" strokeWidth={0.5} />
+        <text x={280} y={145} textAnchor="middle" fontFamily="var(--font-syne)" fontSize={11} fill="#EF4444" fontWeight={700}>GONE</text>
+      </motion.g>
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        No more HTTP headers. 2-14 byte WebSocket frames from now on.
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 5: Tunnel Opens ── */
+function StepTunnelOpens({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* Tunnel pipe */}
+      <motion.rect
+        x={132} y={97} width={296} height={22} rx={11}
+        fill={concept.color.bg} stroke={a} strokeWidth={2}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.0, delay: 0.2, ease: 'easeOut' }}
+        style={{ originX: 0.5 }}
+      />
+      {/* Persistent label */}
+      <motion.text
+        x={280} y={112} textAnchor="middle"
+        fontFamily="var(--font-syne)" fontSize={10} fill={a} fontWeight={800}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 1.0 }}
+      >
+        persistent
+      </motion.text>
+      {/* Glow pulse */}
+      <motion.rect
+        x={132} y={97} width={296} height={22} rx={11}
+        fill={a}
+        animate={{ opacity: [0.1, 0.25, 0.1] }}
+        transition={{ repeat: Infinity, duration: 2, delay: 1.2 }}
+      />
+      <text x={280} y={170} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill="#A8A29E" fontStyle="italic">
+        Stays open until explicitly closed — server can speak first now
+      </text>
+    </svg>
+  )
+}
+
+/* ── Step 6: Free Flow ── */
+function StepFreeFlow({ concept }: { concept: Concept }) {
+  const a = concept.color.accent
+  return (
+    <svg viewBox="0 0 560 220" style={{ width:'100%', maxWidth:640, height:'100%', maxHeight:260 }}>
+      <defs>
+        <marker id="ag-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke={a} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <marker id="am-6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </marker>
+        <style>{`
+          @keyframes flowRight {
+            0%   { transform: translateX(0);   opacity: 0 }
+            8%   { opacity: 1 }
+            92%  { opacity: 1 }
+            100% { transform: translateX(200px); opacity: 0 }
+          }
+          @keyframes flowLeft {
+            0%   { transform: translateX(0);   opacity: 0 }
+            8%   { opacity: 1 }
+            92%  { opacity: 1 }
+            100% { transform: translateX(-200px); opacity: 0 }
+          }
+        `}</style>
+      </defs>
+      <ClientBox concept={concept} />
+      <ServerBox concept={concept} />
+      {/* Tunnel */}
+      <rect x={132} y={97} width={296} height={22} rx={11} fill={concept.color.bg} stroke={a} strokeWidth={2} />
+      <text x={280} y={112} textAnchor="middle" fontFamily="var(--font-syne)" fontSize={10} fill={a} fontWeight={800}>persistent</text>
+      {/* Flow right: comment */}
+      <g style={{ animation: 'flowRight 2.2s linear infinite' }}>
+        <rect x={0} y={128} width={60} height={14} rx={7} fill={a} />
+        <text x={30} y={138} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={7.5} fill="white" fontWeight={600}>comment →</text>
+      </g>
+      {/* Flow right: typing */}
+      <g style={{ animation: 'flowRight 2.2s linear infinite 1.1s' }}>
+        <rect x={0} y={128} width={48} height={14} rx={7} fill={a} opacity={0.8} />
+        <text x={24} y={138} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={7.5} fill="white" fontWeight={600}>typing…</text>
+      </g>
+      {/* Flow left: new post */}
+      <g style={{ animation: 'flowLeft 2.6s linear infinite 0.4s' }}>
+        <rect x={0} y={148} width={56} height={14} rx={7} fill="#059669" />
+        <text x={28} y={158} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={7.5} fill="white" fontWeight={600}>← new post</text>
+      </g>
+      {/* Flow left: notification */}
+      <g style={{ animation: 'flowLeft 2.6s linear infinite 1.6s' }}>
+        <rect x={0} y={148} width={74} height={14} rx={7} fill="#059669" opacity={0.8} />
+        <text x={37} y={158} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={7.5} fill="white" fontWeight={600}>← notification</text>
+      </g>
+      <text x={280} y={190} textAnchor="middle" fontFamily="var(--font-dm-sans)" fontSize={11} fill={a} fontWeight={500} fontStyle="italic">
+        Both directions, simultaneously, no asking permission
+      </text>
+    </svg>
   )
 }
