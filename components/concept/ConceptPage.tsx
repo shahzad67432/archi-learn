@@ -6,6 +6,7 @@ import ConceptTopBar from '@/components/concept/ConceptTopBar'
 import ProgressSpine from '@/components/concept/ProgressSpine'
 import ZonePlaceholder from '@/components/concept/ZonePlaceholder'
 import ZoneHook from '@/components/concept/zones/ZoneHook'
+import ZoneHowItWorks from '@/components/concept/zones/ZoneHowItWorks'
 
 const ZONES = [
   { id: 0, label: 'The Problem',   icon: '⚡' },
@@ -92,6 +93,12 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
                 concept={concept}
                 onComplete={() => markZoneComplete(0)}
                 onNext={() => scrollToZone(1)}
+              />
+            ) : i === 1 ? (
+              <ZoneHowItWorks
+                concept={concept}
+                onComplete={() => markZoneComplete(1)}
+                onNext={() => scrollToZone(2)}
               />
             ) : (
               <ZonePlaceholder label={zone.label} color={concept.color.accent} />

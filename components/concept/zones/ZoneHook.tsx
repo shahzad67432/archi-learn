@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import type { Concept } from '@/data/concepts'
 import ZoneHookDiagram from '@/components/concept/scenes/ZoneHookDiagram'
+import ZoneHookPanels from '@/components/concept/scenes/ZoneHookPanels'
 
 interface Props {
   concept: Concept
@@ -54,197 +55,13 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
 
       {/* Bottom panels grid */}
       <motion.div
-        className="grid grid-cols-2 min-h-0"
-        style={{ flex: 4, gap: 'clamp(8px, 1.2vw, 12px)' }}
+        className="grid grid-cols-2 min-h-0 pb-6 pl-7"
+        style={{ flex: 3, gap: 'clamp(6px, 1vw, 10px)' }}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
       >
-        {/* Panel A — HTTP polling problem */}
-        <div
-          style={{
-            background: 'var(--color-background-secondary)',
-            borderRadius: 10,
-            padding: 'clamp(8px, 1.2vw, 12px)',
-            border: '0.5px solid var(--color-border-tertiary)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          <span
-            style={{
-              fontSize: 9,
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#DC2626',
-              marginBottom: 5,
-              display: 'block',
-            }}
-          >
-            HTTP polling — the problem
-          </span>
-          <svg
-            style={{ flex: 1, width: '100%', minHeight: 0 }}
-            viewBox="0 0 148 88"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <defs>
-              <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5"
-                markerWidth="5" markerHeight="5"
-                orient="auto-start-reverse">
-                <path d="M2 1L8 5L2 9" fill="none" stroke="#DC2626"
-                  strokeWidth="1.8" strokeLinecap="round"
-                  strokeLinejoin="round"/>
-              </marker>
-              <marker id="ag3" viewBox="0 0 10 10" refX="8" refY="5"
-                markerWidth="5" markerHeight="5"
-                orient="auto-start-reverse">
-                <path d="M2 1L8 5L2 9" fill="none" stroke="#A8A29E"
-                  strokeWidth="1.5" strokeLinecap="round"
-                  strokeLinejoin="round"/>
-              </marker>
-            </defs>
-            <rect x="2" y="4" width="36" height="20" rx="4"
-              fill="#FFF1F2" stroke="#FDA4AF" strokeWidth="0.5"/>
-            <text x="20" y="18" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="8"
-              fill="#DC2626" fontWeight="600">client</text>
-            <rect x="110" y="4" width="36" height="20" rx="4"
-              fill="#FFF1F2" stroke="#FDA4AF" strokeWidth="0.5"/>
-            <text x="128" y="18" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="8"
-              fill="#DC2626" fontWeight="600">server</text>
-
-            <line x1="38" y1="11" x2="108" y2="11"
-              stroke="#DC2626" strokeWidth="1"
-              strokeDasharray="3,2" markerEnd="url(#ar)"/>
-            <text x="73" y="9" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#DC2626">ask?</text>
-            <line x1="108" y1="20" x2="38" y2="20"
-              stroke="#A8A29E" strokeWidth="0.8"
-              strokeDasharray="3,2" markerEnd="url(#ag3)"/>
-            <text x="73" y="30" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#A8A29E">nothing.</text>
-
-            <line x1="38" y1="40" x2="108" y2="40"
-              stroke="#DC2626" strokeWidth="1"
-              strokeDasharray="3,2" markerEnd="url(#ar)"/>
-            <text x="73" y="38" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#DC2626">ask again?</text>
-            <line x1="108" y1="49" x2="38" y2="49"
-              stroke="#A8A29E" strokeWidth="0.8"
-              strokeDasharray="3,2" markerEnd="url(#ag3)"/>
-            <text x="73" y="59" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#A8A29E">nothing.</text>
-
-            <line x1="38" y1="66" x2="108" y2="66"
-              stroke="#DC2626" strokeWidth="1"
-              strokeDasharray="3,2" markerEnd="url(#ar)"/>
-            <text x="73" y="64" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#DC2626">again?</text>
-
-            <text x="74" y="82" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="8"
-              fill="#DC2626" fontStyle="italic"
-              fontWeight="500">
-              99% of requests return empty
-            </text>
-          </svg>
-        </div>
-
-        {/* Panel B — Frame anatomy */}
-        <div
-          style={{
-            background: 'var(--color-background-secondary)',
-            borderRadius: 10,
-            padding: 'clamp(8px, 1.2vw, 12px)',
-            border: '0.5px solid var(--color-border-tertiary)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          <span
-            style={{
-              fontSize: 9,
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: concept.color.accent,
-              marginBottom: 5,
-              display: 'block',
-            }}
-          >
-            Frame anatomy
-          </span>
-          <svg
-            style={{ flex: 1, width: '100%', minHeight: 0 }}
-            viewBox="0 0 148 88"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            {/* Frame segments */}
-            <rect x="4" y="8" width="18" height="20" rx="3"
-              fill={concept.color.bg}
-              stroke={concept.color.border} strokeWidth="0.5"/>
-            <text x="13" y="21" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill={concept.color.accent} fontWeight="600">op</text>
-            <rect x="22" y="8" width="20" height="20" rx="3"
-              fill={concept.color.bg}
-              stroke={concept.color.border} strokeWidth="0.5"/>
-            <text x="32" y="21" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill={concept.color.accent} fontWeight="600">len</text>
-            <rect x="42" y="8" width="102" height="20" rx="3"
-              fill="white" stroke={concept.color.border}
-              strokeWidth="0.5"/>
-            <text x="93" y="21" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill={concept.color.accent}>payload (your data)</text>
-
-            {/* Callout lines */}
-            <line x1="13" y1="28" x2="13" y2="38"
-              stroke="#A8A29E" strokeWidth="0.5"
-              strokeDasharray="2,1"/>
-            <text x="13" y="45" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7"
-              fill="#A8A29E">0x1=text</text>
-            <text x="13" y="53" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7"
-              fill="#A8A29E">0x9=ping</text>
-
-            <line x1="93" y1="28" x2="93" y2="38"
-              stroke="#A8A29E" strokeWidth="0.5"
-              strokeDasharray="2,1"/>
-            <text x="93" y="45" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7"
-              fill="#A8A29E">your JSON string</text>
-
-            {/* Overhead comparison */}
-            <rect x="4" y="62" width="60" height="13" rx="3"
-              fill="#FFF1F2" stroke="#FDA4AF" strokeWidth="0.5"/>
-            <text x="34" y="73" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#DC2626">HTTP ≈ 800 bytes</text>
-            <rect x="70" y="62" width="74" height="13" rx="3"
-              fill={concept.color.bg}
-              stroke={concept.color.border} strokeWidth="0.5"/>
-            <text x="107" y="73" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill={concept.color.accent}>WS ≈ 14 bytes ✓</text>
-
-            <text x="74" y="86" textAnchor="middle"
-              fontFamily="var(--font-dm-sans)" fontSize="7.5"
-              fill="#A8A29E" fontStyle="italic">57× less per message</text>
-          </svg>
-        </div>
+        <ZoneHookPanels accentColor={concept.color.accent} />
       </motion.div>
     </>
   )
