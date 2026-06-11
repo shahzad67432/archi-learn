@@ -65,12 +65,22 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
 
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext()
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goPrev()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [step])
+
   const goNext = () => {
     if (step < STEPS.length - 1) {
       setStep(s => s + 1)
     } else {
       setCompleted(true)
       onComplete()
+      localStorage.setItem(`zone-complete-${concept.slug}-1`, 'true')
     }
   }
 
@@ -335,6 +345,12 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
               Zone 3 →
             </motion.button>
           )}
+        </div>
+        {/* Mobile swipe hint */}
+        <div className="lg:hidden flex items-center justify-center gap-1 mt-2">
+          <span style={{ fontSize: 10, color: '#A8A29E', fontFamily: 'var(--font-dm-sans)', fontWeight: 300 }}>
+            ← → arrow keys or tap buttons to navigate
+          </span>
         </div>
       </div>
     </div>

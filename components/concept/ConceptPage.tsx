@@ -50,6 +50,16 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
     return () => container.removeEventListener('scroll', handleScroll)
   }, [activeZone])
 
+  useEffect(() => {
+    const zones = [0, 1, 2, 3, 4]
+    zones.forEach(i => {
+      const key = `zone-complete-${concept.slug}-${i}`
+      if (localStorage.getItem(key) === 'true') {
+        markZoneComplete(i)
+      }
+    })
+  }, [])
+
   return (
     <div style={{ background: '#FFFBF7', minHeight: '100vh' }}>
       <ConceptTopBar
