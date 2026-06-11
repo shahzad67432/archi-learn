@@ -24,7 +24,7 @@ export const concepts: Concept[] = [
     difficulty: 'Beginner',
     xpReward: 50,
     tags: ['Networking', 'Real-time', 'Protocol'],
-    illustration: '/illustrations/ws3d.svg',
+    illustration: '/illustrations/ws1.svg',
     color: { bg: '#F0FDF4', border: '#86EFAC', accent: '#16A34A' },
     published: true,
   },

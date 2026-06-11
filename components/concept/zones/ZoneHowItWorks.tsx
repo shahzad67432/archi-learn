@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
 
@@ -65,16 +65,7 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext()
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goPrev()
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [step])
-
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (step < STEPS.length - 1) {
       setStep(s => s + 1)
     } else {
@@ -82,11 +73,20 @@ export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
       onComplete()
       localStorage.setItem(`zone-complete-${concept.slug}-1`, 'true')
     }
-  }
+  }, [step, onComplete, concept.slug])
 
-  const goPrev = () => {
+  const goPrev = useCallback(() => {
     if (step > 0) setStep(s => s - 1)
-  }
+  }, [step])
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext()
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goPrev()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [goNext, goPrev])
 
   const current = STEPS[step]
 
@@ -605,7 +605,6 @@ function Step101Response({ concept }: { concept: Concept }) {
 
 /* ── Step 4: HTTP Dies ── */
 function StepHTTPDies({ concept }: { concept: Concept }) {
-  const a = concept.color.accent
   const cw = 18, lx = 80, rx = 280, mid = (lx + cw + rx - cw) / 2
   return (
     <StepCanvas concept={concept}>
