@@ -328,6 +328,19 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
     ? 'Restart gateway'
     : MISSIONS[mission]?.action
 
+  const eventLogEl = (
+    <div className="tryit-log" style={{ border: '1px solid rgba(0,0,0,0.08)', background: '#1C1917', borderRadius: 12, padding: 12, overflow: 'auto' }}>
+      <div style={{ fontSize: 10, color: '#A8A29E', fontWeight: 800, marginBottom: 8 }}>EVENT LOG</div>
+      <div style={{ display: 'grid', gap: 6 }}>
+        {logs.map((line, index) => (
+          <div key={`${line}-${index}`} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: index === 0 ? '#ADFA1D' : '#D6D3D1', lineHeight: 1.45 }}>
+            {line}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -416,8 +429,11 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
             </svg>
           </div>
 
-          <div className="tryit-orderbook-wrap">
-            <Orderbook price={price} streamHealthy={streamHealthy} podBStale={podBStale} accent={a} />
+          <div className="tryit-main-bottom">
+            <div className="tryit-orderbook-wrap">
+              <Orderbook price={price} streamHealthy={streamHealthy} podBStale={podBStale} accent={a} />
+            </div>
+            <div className="tryit-event-log hidden lg:block">{eventLogEl}</div>
           </div>
         </div>
 
@@ -498,16 +514,7 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
             </div>
           </div>
 
-          <div className="tryit-log" style={{ border: '1px solid rgba(0,0,0,0.08)', background: '#1C1917', borderRadius: 12, padding: 12, overflow: 'auto' }}>
-            <div style={{ fontSize: 10, color: '#A8A29E', fontWeight: 800, marginBottom: 8 }}>EVENT LOG</div>
-            <div style={{ display: 'grid', gap: 6 }}>
-              {logs.map((line, index) => (
-                <div key={`${line}-${index}`} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: index === 0 ? '#ADFA1D' : '#D6D3D1', lineHeight: 1.45 }}>
-                  {line}
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="lg:hidden">{eventLogEl}</div>
         </div>
       </div>
     </div>
