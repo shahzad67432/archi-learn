@@ -8,6 +8,7 @@ import ZonePlaceholder from '@/components/concept/ZonePlaceholder'
 import ZoneHook from '@/components/concept/zones/ZoneHook'
 import ZoneHowItWorks from '@/components/concept/zones/ZoneHowItWorks'
 import ZoneHardParts from '@/components/concept/zones/ZoneHardParts'
+import ZoneTryIt from '@/components/concept/zones/ZoneTryIt'
 
 const ZONES = [
   { id: 0, label: 'The Problem',   icon: '⚡' },
@@ -117,6 +118,12 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
                 onComplete={() => markZoneComplete(2)}
                 onNext={() => scrollToZone(3)}
                 isVisible={activeZone === 2}
+              />
+            ) : i === 3 ? (
+              <ZoneTryIt
+                concept={concept}
+                onComplete={() => markZoneComplete(3)}
+                onNext={() => scrollToZone(4)}
               />
             ) : (
               <ZonePlaceholder label={zone.label} color={concept.color.accent} />

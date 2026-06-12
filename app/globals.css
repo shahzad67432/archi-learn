@@ -97,3 +97,80 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   .border-surface-raised { border-color: var(--color-surface-raised); }
   .animate-float     { animation: var(--animate-float); }
 }
+
+.tryit-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: clamp(12px,2vw,22px) !important;
+  flex: 1 1 auto;
+  min-height: 0; /* critical for flex children with overflow */
+}
+
+.tryit-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  flex-shrink: 0;
+}
+
+.tryit-canvas-card {
+  height: clamp(140px, 35vw, 220px);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  background: #FFFDF9;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tryit-orderbook-wrap {
+  height: clamp(240px, 40vh, 320px);
+  min-height: 240px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.tryit-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.tryit-log {
+  min-height: 160px;
+  max-height: 240px;
+}
+
+@media (min-width: 1024px) {
+  .tryit-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.4fr);
+    padding-bottom: clamp(12px,2vw,22px) !important;
+  }
+
+  .tryit-main {
+    display: grid;
+    grid-template-rows: minmax(200px, 1fr) minmax(170px, 0.6fr);
+  }
+
+  .tryit-canvas-card,
+  .tryit-orderbook-wrap {
+    height: auto;
+    min-height: 0;
+  }
+
+  .tryit-side {
+    display: grid;
+    grid-template-rows: auto auto auto minmax(80px, 1fr);
+  }
+
+  .tryit-log {
+    min-height: 0;
+    max-height: none;
+  }
+}
