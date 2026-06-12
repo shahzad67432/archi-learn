@@ -328,6 +328,58 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
     ? 'Restart gateway'
     : MISSIONS[mission]?.action
 
+  const missionCardEl = (
+    <div style={{ border: `1px solid ${concept.color.border}`, background: concept.color.bg, borderRadius: 12, padding: 14 }}>
+      <div style={{ fontSize: 10, color: a, fontWeight: 800, letterSpacing: '0.08em', marginBottom: 7 }}>
+        MISSION {mission + 1}
+      </div>
+      <div style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 18, lineHeight: 1.05, color: '#1C1917', marginBottom: 8 }}>
+        {MISSIONS[mission]?.title}
+      </div>
+      <div style={{ fontSize: 12, color: '#57534E', lineHeight: 1.55 }}>
+        {MISSIONS[mission]?.brief}
+      </div>
+      <button
+        onClick={handlePrimaryAction}
+        disabled={allComplete}
+        style={{
+          marginTop: 13,
+          width: '100%',
+          minHeight: 40,
+          border: 'none',
+          borderRadius: 10,
+          background: allComplete ? '#D6D3D1' : '#1C1917',
+          color: allComplete ? '#78716C' : '#FFFBF7',
+          fontFamily: 'var(--font-syne)',
+          fontWeight: 800,
+          fontSize: 12,
+          cursor: allComplete ? 'default' : 'pointer',
+        }}
+      >
+        {allComplete ? 'All missions complete' : primaryLabel}
+      </button>
+      {allComplete && (
+        <button
+          onClick={finishZone}
+          style={{
+            marginTop: 8,
+            width: '100%',
+            minHeight: 40,
+            border: `1px solid ${a}`,
+            borderRadius: 10,
+            background: a,
+            color: '#FFFBF7',
+            fontFamily: 'var(--font-syne)',
+            fontWeight: 800,
+            fontSize: 12,
+          }}
+        >
+          Continue to Quiz
+        </button>
+      )}
+    </div>
+  )
+
   const eventLogEl = (
     <div className="tryit-log" style={{ border: '1px solid rgba(0,0,0,0.08)', background: '#1C1917', borderRadius: 12, padding: 12, overflow: 'auto' }}>
       <div style={{ fontSize: 10, color: '#A8A29E', fontWeight: 800, marginBottom: 8 }}>EVENT LOG</div>
@@ -429,6 +481,8 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
             </svg>
           </div>
 
+          <div className="lg:hidden" style={{ margin: 0 }}>{missionCardEl}</div>
+
           <div className="tryit-main-bottom">
             <div className="tryit-orderbook-wrap">
               <Orderbook price={price} streamHealthy={streamHealthy} podBStale={podBStale} accent={a} />
@@ -438,55 +492,7 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
         </div>
 
         <div className="tryit-side">
-          <div style={{ border: `1px solid ${concept.color.border}`, background: concept.color.bg, borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 10, color: a, fontWeight: 800, letterSpacing: '0.08em', marginBottom: 7 }}>
-              MISSION {mission + 1}
-            </div>
-            <div style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 18, lineHeight: 1.05, color: '#1C1917', marginBottom: 8 }}>
-              {MISSIONS[mission]?.title}
-            </div>
-            <div style={{ fontSize: 12, color: '#57534E', lineHeight: 1.55 }}>
-              {MISSIONS[mission]?.brief}
-            </div>
-            <button
-              onClick={handlePrimaryAction}
-              disabled={allComplete}
-              style={{
-                marginTop: 13,
-                width: '100%',
-                minHeight: 40,
-                border: 'none',
-                borderRadius: 10,
-                background: allComplete ? '#D6D3D1' : '#1C1917',
-                color: allComplete ? '#78716C' : '#FFFBF7',
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 800,
-                fontSize: 12,
-                cursor: allComplete ? 'default' : 'pointer',
-              }}
-            >
-              {allComplete ? 'All missions complete' : primaryLabel}
-            </button>
-            {allComplete && (
-              <button
-                onClick={finishZone}
-                style={{
-                  marginTop: 8,
-                  width: '100%',
-                  minHeight: 40,
-                  border: `1px solid ${a}`,
-                  borderRadius: 10,
-                  background: a,
-                  color: '#FFFBF7',
-                  fontFamily: 'var(--font-syne)',
-                  fontWeight: 800,
-                  fontSize: 12,
-                }}
-              >
-                Continue to Quiz
-              </button>
-            )}
-          </div>
+          <div className="hidden lg:block">{missionCardEl}</div>
 
           <div style={{ border: '1px solid rgba(0,0,0,0.08)', background: '#fff', borderRadius: 12, padding: 12, display: 'grid', gap: 10 }}>
             <MetricBar label="Latency" value={metrics.latency} suffix="%" tone={metrics.latency > 70 ? '#DC2626' : metrics.latency > 40 ? '#D97706' : '#16A34A'} />
