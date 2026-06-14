@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import type { Concept } from '@/data/concepts'
 import ConceptDiagram from './ConceptDiagram'
+import { useXPStore } from '@/lib/store/xpStore'
+import { getStoredCertificate, generateCertificatePNG, downloadBlob } from '@/components/concept/CertificateUtils'
 
 const DIFFICULTY_STYLES: Record<string, { bg: string; color: string }> = {
   Beginner:     { bg: '#DCFCE7', color: '#16A34A' },
@@ -136,6 +138,18 @@ function LockedCard({ concept, index }: Props) {
 
 function PublishedCard({ concept, index }: Props) {
   const ds = DIFFICULTY_STYLES[concept.difficulty] ?? { bg: '#F3F4F6', color: '#78716C' }
+  const completedConcepts = useXPStore(s => s.completedConcepts)
+  const isCompleted = completedConcepts.includes(concept.slug)
+  const certData = getStoredCertificate(concept.slug)
+
+  const handleDownloadCert = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const data = certData
+    if (!data) return
+    const blob = await generateCertificatePNG(data)
+    downloadBlob(blob, `archi-learn-${concept.slug}-certificate.png`)
+  }
 
   return (
     <motion.div
@@ -268,6 +282,26 @@ function PublishedCard({ concept, index }: Props) {
           </div>
         </div>
       </Link>
+
+      {isCompleted && certData && (
+        <button
+          onClick={handleDownloadCert}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            width: '100%', padding: '10px 0', border: 'none', borderTop: '1px solid var(--color-surface-raised)',
+            background: 'var(--color-surface)', color: 'var(--color-ink-muted)', cursor: 'pointer',
+            fontFamily: 'var(--font-dm-sans)', fontSize: 12, fontWeight: 600,
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#1C1917' }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-ink-muted)' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M8 2v9M4 7l4 4 4-4M2 13h12" />
+          </svg>
+          Download Certificate
+        </button>
+      )}
     </motion.div>
   )
 }

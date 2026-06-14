@@ -78,7 +78,7 @@ export default function ConceptsHero({ totalConcepts, totalCategories, totalTime
       >
         <Stat value={totalConcepts} label="Concepts" />
         <Stat value={totalCategories} label="Categories" />
-        <Stat value={`~${totalTime}h`} label="Study Time" />
+        <Stat value={`${totalTime}h`} label="Study Time" />
         <Stat value={completedCount} label="Completed" />
       </div>
     </section>

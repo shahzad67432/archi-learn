@@ -36,7 +36,9 @@ export default function ConceptsPage() {
   }, [])
 
   const totalTime = useMemo(() =>
-    Math.round(allConcepts.reduce((sum, c) => sum + c.readTime, 0) / 60),
+    Math.round(
+      allConcepts.filter(c => c.published).reduce((sum, c) => sum + c.readTime, 0) / 60
+    ),
     [],
   )
 

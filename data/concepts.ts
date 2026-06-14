@@ -34,7 +34,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/ws1.svg',
     color: { bg: '#F0FDF4', border: '#86EFAC', accent: '#16A34A' },
     published: true,
-    readTime: 25,
+    readTime: 45,
     rating: 4.8,
     detailSections: [
       {
@@ -71,7 +71,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/load-balancing.svg',
     color: { bg: '#FFF7ED', border: '#FDBA74', accent: '#C05400' },
     published: false,
-    readTime: 8,
+    readTime: 20,
     rating: 4.9,
     detailSections: [
       {
@@ -98,7 +98,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/caching.svg',
     color: { bg: '#FEFCE8', border: '#FDE047', accent: '#A16207' },
     published: false,
-    readTime: 14,
+    readTime: 30,
     rating: 4.9,
     detailSections: [
       {
@@ -132,7 +132,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/databases.svg',
     color: { bg: '#F5F3FF', border: '#C4B5FD', accent: '#6D28D9' },
     published: false,
-    readTime: 20,
+    readTime: 40,
     rating: 4.7,
     detailSections: [
       {
@@ -167,7 +167,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/cap-theorem.svg',
     color: { bg: '#ECFEFF', border: '#67E8F9', accent: '#0E7490' },
     published: false,
-    readTime: 20,
+    readTime: 35,
     rating: 4.9,
     detailSections: [
       {
@@ -193,7 +193,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/sharding.svg',
     color: { bg: '#FFF1F2', border: '#FDA4AF', accent: '#BE123C' },
     published: false,
-    readTime: 18,
+    readTime: 35,
     rating: 4.6,
     detailSections: [
       {
@@ -219,7 +219,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/message-queues.svg',
     color: { bg: '#F0FDFA', border: '#99F6E4', accent: '#0F766E' },
     published: false,
-    readTime: 15,
+    readTime: 30,
     rating: 4.8,
     detailSections: [
       {
@@ -244,7 +244,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/rate-limiting.svg',
     color: { bg: '#FFF7ED', border: '#FED7AA', accent: '#EA580C' },
     published: false,
-    readTime: 12,
+    readTime: 25,
     rating: 4.5,
     detailSections: [
       {
@@ -271,7 +271,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/consistent-hashing.svg',
     color: { bg: '#F0F9FF', border: '#7DD3FC', accent: '#0369A1' },
     published: false,
-    readTime: 12,
+    readTime: 30,
     rating: 4.8,
     detailSections: [
       {
@@ -305,7 +305,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/replication.svg',
     color: { bg: '#FDF4FF', border: '#E879F9', accent: '#A21CAF' },
     published: false,
-    readTime: 16,
+    readTime: 35,
     rating: 4.8,
     detailSections: [
       {
@@ -331,7 +331,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/microservices.svg',
     color: { bg: '#F8FAFC', border: '#CBD5E1', accent: '#334155' },
     published: false,
-    readTime: 22,
+    readTime: 45,
     rating: 4.6,
     detailSections: [
       {
@@ -366,7 +366,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/load-balancing.svg',
     color: { bg: '#F0F9FF', border: '#7DD3FC', accent: '#0EA5E9' },
     published: false,
-    readTime: 7,
+    readTime: 20,
     rating: 4.7,
     detailSections: [
       {
@@ -391,7 +391,7 @@ export const concepts: Concept[] = [
     illustration: '/illustrations/dns-cdn.svg',
     color: { bg: '#FFF7ED', border: '#FDBA74', accent: '#F59E0B' },
     published: false,
-    readTime: 9,
+    readTime: 20,
     rating: 4.7,
     detailSections: [
       {

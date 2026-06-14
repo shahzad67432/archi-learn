@@ -1,14 +1,16 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import type { Concept } from '@/data/concepts'
 import ConceptTopBar from '@/components/concept/ConceptTopBar'
 import ProgressSpine from '@/components/concept/ProgressSpine'
-import ZonePlaceholder from '@/components/concept/ZonePlaceholder'
 import ZoneHook from '@/components/concept/zones/ZoneHook'
 import ZoneHowItWorks from '@/components/concept/zones/ZoneHowItWorks'
 import ZoneHardParts from '@/components/concept/zones/ZoneHardParts'
 import ZoneTryIt from '@/components/concept/zones/ZoneTryIt'
+import ZoneQuiz from '@/components/concept/zones/ZoneQuiz'
+import { useXPStore } from '@/lib/store/xpStore'
 
 const ZONES = [
   { id: 0, label: 'The Problem',   icon: '⚡' },
@@ -19,12 +21,15 @@ const ZONES = [
 ]
 
 export default function ConceptPage({ concept }: { concept: Concept }) {
+  const router = useRouter()
   const [activeZone, setActiveZone] = useState(0)
   const [completedZones, setCompletedZones] = useState<Set<number>>(new Set())
   const scrollRef = useRef<HTMLDivElement>(null)
+  const markConceptComplete = useXPStore(s => s.markConceptComplete)
 
   const markZoneComplete = (index: number) => {
     setCompletedZones(prev => new Set([...prev, index]))
+    localStorage.setItem(`zone-complete-${concept.slug}-${index}`, 'true')
   }
 
   const scrollToZone = useCallback((index: number) => {
@@ -61,6 +66,12 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (completedZones.size === ZONES.length) {
+      markConceptComplete(concept.slug, concept.xpReward)
+    }
+  }, [completedZones.size])
 
   return (
     <div style={{ background: '#FFFBF7', minHeight: '100vh' }}>
@@ -126,7 +137,11 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
                 onNext={() => scrollToZone(4)}
               />
             ) : (
-              <ZonePlaceholder label={zone.label} color={concept.color.accent} />
+              <ZoneQuiz
+                concept={concept}
+                onComplete={() => markZoneComplete(4)}
+                onNext={() => router.push('/concepts')}
+              />
             )}
           </div>
         ))}
