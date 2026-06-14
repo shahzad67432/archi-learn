@@ -1,7 +1,7 @@
 'use client'
 
-import JourneyPage from '@/components/concepts/JourneyPage'
+import ConceptsPage from '@/components/concepts/ConceptsPage'
 
-export default function ConceptsPage() {
-  return <JourneyPage />
+export default function ConceptsRoute() {
+  return <ConceptsPage />
 }

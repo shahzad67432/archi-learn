@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useXPStore } from '@/lib/store/xpStore'
+import { concepts } from '@/data/concepts'
 import Archi from '@/components/mascot/Archi'
 
 const XP_ORDER: [number, string][] = [
@@ -76,7 +77,7 @@ export default function Home() {
               className="font-dm-sans font-bold uppercase tracking-wider"
               style={{ fontSize: '11px', color: '#C05400' }}
             >
-              12 CONCEPTS · BUILT IN PUBLIC
+              {concepts.length} CONCEPTS · BUILT IN PUBLIC
             </span>
           </motion.div>
 
@@ -164,7 +165,7 @@ export default function Home() {
             <div>
               <div className="font-syne font-extrabold"
                 style={{ fontSize: 'clamp(32px,4.5vw,52px)', color: '#1C1917', lineHeight: 1 }}>
-                12
+                {concepts.length}
               </div>
               <div className="font-dm-sans"
                 style={{ fontSize: '11px', color: '#78716C', marginTop: 4 }}>
@@ -233,7 +234,7 @@ export default function Home() {
               </div>
               <div className="font-dm-sans"
                 style={{ fontSize: '11px', color: '#6B6B6B', marginTop: 6 }}>
-                12 concepts waiting
+                {concepts.length} concepts waiting
               </div>
             </div>
             <div className="flex items-center justify-end">
@@ -254,7 +255,7 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
         >
           <div className="flex items-center gap-2 flex-wrap">
-            {['12 Concepts', '5 Levels of XP', '1 Mascot Guide'].map(label => (
+            {[`${concepts.length} Concepts`, '5 Levels of XP', '1 Mascot Guide'].map(label => (
               <span
                 key={label}
                 className="px-2.5 py-1 rounded-full font-dm-sans"
@@ -285,7 +286,7 @@ export default function Home() {
           >
             <span className="w-[6px] h-[6px] rounded-full" style={{ backgroundColor: '#F97316' }} />
             <span className="font-dm-sans font-bold uppercase tracking-wider" style={{ fontSize: '11px', color: '#C05400' }}>
-              12 CONCEPTS · BUILT IN PUBLIC
+               {concepts.length} CONCEPTS · BUILT IN PUBLIC
             </span>
           </motion.div>
 
@@ -350,7 +351,7 @@ export default function Home() {
               </div>
               <div className="font-dm-sans"
                 style={{ fontSize: '11px', color: '#6B6B6B', marginTop: 6 }}>
-                12 concepts waiting
+                {concepts.length} concepts waiting
               </div>
             </div>
             <div className="flex items-center justify-end">
@@ -419,7 +420,7 @@ export default function Home() {
           {/* Footer */}
           <div className="flex items-center justify-between pt-3 pb-1" style={{ borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
             <div className="flex items-center gap-2 flex-wrap">
-              {['12 Concepts', '5 Levels of XP', '1 Mascot Guide'].map(label => (
+              {[`${concepts.length} Concepts`, '5 Levels of XP', '1 Mascot Guide'].map(label => (
                 <span
                   key={label}
                   className="px-2 py-0.5 rounded-full font-dm-sans"

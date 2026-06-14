@@ -187,3 +187,92 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     grid-template-rows: auto auto auto;
   }
 }
+
+/* ══════════════════════════════════════
+   CONCEPTS PAGE ANIMATIONS
+   Ported from system-design-concepts.html
+══════════════════════════════════════ */
+
+@keyframes concepts-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.7); }
+}
+
+@keyframes concepts-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes concepts-orbit-key {
+  from { transform: rotate(0deg) translateX(36px); }
+  to   { transform: rotate(360deg) translateX(36px); }
+}
+
+@keyframes concepts-fall-in {
+  0%   { transform: translateY(-8px); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateY(8px); opacity: 0; }
+}
+
+@keyframes concepts-lb-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+
+@keyframes concepts-server-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+
+@keyframes concepts-cache-flash {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+@keyframes concepts-shard-grow {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.3); }
+}
+
+@keyframes concepts-msg-flow {
+  0%   { transform: translateX(-40px); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(50px); opacity: 0; }
+}
+
+@keyframes concepts-repl-sync {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+@keyframes concepts-cap-orbit {
+  0%   { transform: translate(-50%, -50%) translate(0, -32px); }
+  33%  { transform: translate(-50%, -50%) translate(28px, 16px); }
+  66%  { transform: translate(-50%, -50%) translate(-28px, 16px); }
+  100% { transform: translate(-50%, -50%) translate(0, -32px); }
+}
+
+@keyframes concepts-cdn-flash {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.9; }
+}
+
+@keyframes concepts-scale-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes concepts-wire-pulse {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.6; }
+}
+
+@keyframes concepts-db-blink {
+  0%, 100% { background-color: var(--hue-store, #10B981); }
+  50%      { background-color: var(--hue-store-mid, #34D399); }
+}
+
+@keyframes concepts-dot-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}

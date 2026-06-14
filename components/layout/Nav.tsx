@@ -5,11 +5,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useXPStore } from '@/lib/store/xpStore'
-import { CONCEPTS } from '@/lib/data/concepts'
+import { concepts } from '@/data/concepts'
 
 const NAV_LINKS = [
   { href: '/', label: 'Home', hint: '' },
-  { href: '/concepts', label: 'Concepts', hint: `${CONCEPTS.length} topics →` },
+  { href: '/concepts', label: 'Concepts', hint: `${concepts.length} topics →` },
   { href: '/about', label: 'About', hint: 'The story →' },
 ]
 
