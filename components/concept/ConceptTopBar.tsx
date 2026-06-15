@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import type { Concept } from '@/data/concepts'
+import SupportModal from '@/components/layout/SupportModal'
 
 const DIFFICULTY_STYLES: Record<string, { bg: string; color: string }> = {
   Beginner:     { bg: '#DCFCE7', color: '#16A34A' },
@@ -19,16 +21,18 @@ export default function ConceptTopBar({
   totalZones: number
 }) {
   const ds = DIFFICULTY_STYLES[concept.difficulty] ?? { bg: '#F3F4F6', color: '#78716C' }
+  const [supportOpen, setSupportOpen] = useState(false)
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 52,
-        zIndex: 100,
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 52,
+          zIndex: 100,
         background: 'rgba(255,251,247,0.95)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
@@ -102,22 +106,34 @@ export default function ConceptTopBar({
         </span>
       </div>
 
-      <span
-        className="font-syne"
+      <button
+        onClick={() => setSupportOpen(true)}
         style={{
-          backgroundColor: concept.color.bg,
-          border: `1px solid ${concept.color.border}`,
-          color: concept.color.accent,
-          borderRadius: 20,
-          padding: '4px 12px',
+          fontFamily: 'var(--font-dm-sans)',
           fontSize: 11,
           fontWeight: 700,
+          padding: '5px 12px',
+          borderRadius: 20,
+          border: 'none',
+          backgroundColor: concept.color.accent,
+          color: '#FFFBF7',
+          cursor: 'pointer',
+          transition: 'opacity 0.15s',
           whiteSpace: 'nowrap',
           flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 4,
         }}
+        onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
+        onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
       >
-        +{concept.xpReward} XP
-      </span>
-    </div>
+        ☕ Support dev
+      </button>
+
+      </div>
+
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
+    </>
   )
 }

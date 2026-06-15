@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useXPStore } from '@/lib/store/xpStore'
 import { concepts } from '@/data/concepts'
+import SupportModal from './SupportModal'
 
 const NAV_LINKS = [
   { href: '/', label: 'Home', hint: '' },
@@ -15,8 +15,8 @@ const NAV_LINKS = [
 
 export default function Nav() {
   const pathname = usePathname()
-  const level = useXPStore(s => s.level)
   const [open, setOpen] = useState(false)
+  const [supportOpen, setSupportOpen] = useState(false)
 
   return (
     <>
@@ -31,15 +31,21 @@ export default function Nav() {
           WebkitBackdropFilter: 'blur(8px)',
         }}
       >
-        <div className="flex items-center justify-between h-full md:px-5">
-          {/* Logo */}
+        <div
+          className="h-full md:px-5"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          {/* Logo (left) */}
           <Link href="/">
             <span style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 18, color: '#1C1917' }}>
               A<span style={{ color: '#F97316' }}>.</span>rchi.learn
             </span>
           </Link>
 
-          {/* Desktop links */}
+          {/* Desktop links (center) */}
           <div className="hidden sm:flex items-center">
             <div
               style={{
@@ -48,6 +54,7 @@ export default function Nav() {
                 padding: '4px 6px',
                 display: 'flex',
                 gap: 2,
+                alignItems: 'center',
               }}
             >
               {NAV_LINKS.map(({ href, label }) => {
@@ -76,25 +83,29 @@ export default function Nav() {
           </div>
 
           {/* Right side */}
-          <div className="flex items-center gap-3">
-            <div
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSupportOpen(true)}
+              className="hidden sm:flex items-center"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                backgroundColor: '#FFF0E5',
-                border: '1px solid #FDBA74',
-                borderRadius: 20,
-                padding: '4px 10px',
-                fontSize: 11,
-                fontWeight: 600,
-                color: '#C05400',
                 fontFamily: 'var(--font-dm-sans)',
+                fontSize: 12,
+                fontWeight: 700,
+                padding: '6px 14px',
+                borderRadius: 9999,
+                border: 'none',
+                backgroundColor: '#F97316',
+                color: '#FFFBF7',
+                cursor: 'pointer',
+                transition: 'opacity 0.15s',
+                gap: 5,
+                whiteSpace: 'nowrap',
               }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
-              <span style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#F97316' }} />
-              <span>{level}</span>
-            </div>
+              ☕ Buy me a coffee
+            </button>
 
             {/* Hamburger */}
             <button
@@ -172,10 +183,37 @@ export default function Nav() {
                   </Link>
                 )
               })}
+              {/* Mobile support link */}
+              <button
+                onClick={() => { setOpen(false); setSupportOpen(true) }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  padding: '12px 14px',
+                  borderRadius: 10,
+                  border: 'none',
+                  background: 'transparent',
+                  color: '#1C1917',
+                  fontFamily: 'var(--font-dm-sans)',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  marginBottom: 4,
+                }}
+              >
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>☕</span> Buy me a coffee
+                </span>
+                <span style={{ color: '#F97316', fontSize: 12, fontWeight: 600 }}>☕</span>
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
     </>
   )
 }

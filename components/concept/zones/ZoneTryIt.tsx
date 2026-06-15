@@ -99,10 +99,19 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
     'Incident opened: BTC/USDT quotes are stale for active traders.',
     'Current design uses repeated HTTP polling against a volatile feed.',
   ])
-  const [lesson, setLesson] = useState(0)
+  const [lesson, setLesson] = useState(() => {
+    if (typeof window === 'undefined') return 0
+    return localStorage.getItem(`tryit-lesson1-${concept.slug}`) === 'true' ? 1 : 0
+  })
   const [act, setAct] = useState<0|1|2>(0)
-  const [lesson1Complete, setLesson1Complete] = useState(false)
-  const [lesson2Complete, setLesson2Complete] = useState(false)
+  const [lesson1Complete, setLesson1Complete] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem(`tryit-lesson1-${concept.slug}`) === 'true'
+  })
+  const [lesson2Complete, setLesson2Complete] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem(`tryit-lesson2-${concept.slug}`) === 'true'
+  })
 
   const a = concept.color.accent
   const allComplete = completed.size === MISSIONS.length
@@ -138,6 +147,14 @@ export default function ZoneTryIt({ concept, onComplete, onNext }: Props) {
       return () => window.clearTimeout(t1)
     }
   }, [allComplete, lesson1Complete])
+
+  useEffect(() => {
+    localStorage.setItem(`tryit-lesson1-${concept.slug}`, String(lesson1Complete))
+  }, [lesson1Complete, concept.slug])
+
+  useEffect(() => {
+    localStorage.setItem(`tryit-lesson2-${concept.slug}`, String(lesson2Complete))
+  }, [lesson2Complete, concept.slug])
 
   const addLog = (line: string) => {
     setLogs(prev => [`${new Date().toLocaleTimeString([], { minute: '2-digit', second: '2-digit' })} ${line}`, ...prev].slice(0, 7))

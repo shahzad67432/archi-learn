@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
 import CertificateModal from '@/components/concept/CertificateModal'
+import SupportModal from '@/components/layout/SupportModal'
 
 interface Question {
   id: number
@@ -151,6 +152,7 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
   const [lastScore, setLastScore] = useState<{score: number, total: number} | null>(null)
   const [showCertPrompt, setShowCertPrompt] = useState(false)
   const [dismissedBanner, setDismissedBanner] = useState(false)
+  const [supportOpen, setSupportOpen] = useState(false)
 
   const q = QUESTIONS[current]
   const isLast = current === QUESTIONS.length - 1
@@ -257,7 +259,8 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
   // ── Locked screen (retry timeout) ──
   if (retryUntil) {
     return (
-      <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
+      <>
+        <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -290,14 +293,17 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
           </div>
         </motion.div>
       </div>
-    )
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
+    </>
+  )
   }
 
   // ── Certificate prompt (completed quiz, no cert yet) ──
   if (showCertPrompt) {
     const stored = lastScore || { score: Math.round(QUESTIONS.length / 2), total: QUESTIONS.length }
     return (
-      <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
+      <>
+        <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -333,16 +339,32 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
             >
               Re-take Quiz
             </motion.button>
+            <button
+              onClick={() => setSupportOpen(true)}
+              className="font-dm-sans"
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                fontSize: 12, color: '#A8A29E', padding: '4px 0',
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#F97316' }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#A8A29E' }}
+            >
+              ☕ Support the project
+            </button>
           </div>
         </motion.div>
       </div>
-    )
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
+    </>
+  )
   }
 
   // ── Results screen ──
   if (finished) {
     return (
-      <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
+      <>
+        <div className="h-full flex flex-col items-center justify-center px-6" style={{ minHeight: '100vh' }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -393,11 +415,26 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
               >
                 Retry in 1 hour
               </motion.button>
+              <button
+                onClick={() => setSupportOpen(true)}
+                className="font-dm-sans"
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  fontSize: 12, color: '#A8A29E', padding: '2px 0',
+                  transition: 'color 0.15s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#F97316' }}
+                onMouseLeave={e => { e.currentTarget.style.color = '#A8A29E' }}
+              >
+                ☕ Fuel the Build
+              </button>
             </>
           )}
         </motion.div>
       </div>
-    )
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
+    </>
+  )
   }
 
   // ── Quiz in progress ──
@@ -596,6 +633,25 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Bottom support link */}
+      <div className="flex justify-center flex-shrink-0" style={{ padding: '4px 0 16px' }}>
+        <button
+          onClick={() => setSupportOpen(true)}
+          className="font-dm-sans"
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontSize: 11, color: '#D6D3D1',
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#F97316' }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#D6D3D1' }}
+        >
+          ☕ Fuel the Build
+        </button>
+      </div>
+
+      <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
     </div>
   )
 }

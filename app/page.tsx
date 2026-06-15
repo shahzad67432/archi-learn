@@ -265,10 +265,10 @@ export default function Home() {
               </span>
             ))}
           </div>
-          <Link href="#" className="font-dm-sans flex items-center gap-1 shrink-0" style={{ fontSize: '11px' }}>
+          <a href="https://github.com/shahzad67432/archi-learn" target="_blank" rel="noopener noreferrer" className="font-dm-sans flex items-center gap-1 shrink-0" style={{ fontSize: '11px', textDecoration: 'none' }}>
             <span style={{ color: '#A8A29E' }}>Built in public ·</span>
             <span style={{ color: '#F97316' }}>Contribute ↗</span>
-          </Link>
+          </a>
         </motion.div>
       </div>
 
@@ -430,10 +430,10 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <Link href="#" className="font-dm-sans flex items-center gap-1 shrink-0" style={{ fontSize: '10px' }}>
+            <a href="https://github.com/shahzad67432/archi-learn" target="_blank" rel="noopener noreferrer" className="font-dm-sans flex items-center gap-1 shrink-0" style={{ fontSize: '10px', textDecoration: 'none' }}>
               <span style={{ color: '#A8A29E' }}>Built in public ·</span>
               <span style={{ color: '#F97316' }}>Contribute ↗</span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
