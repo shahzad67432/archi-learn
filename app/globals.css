@@ -287,9 +287,8 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   50%      { transform: scale(1.03); }
 }
 @keyframes archi-blink {
-  0%, 94%  { transform: scaleY(1); }
-  95%, 97% { transform: scaleY(0.1); }
-  98%, 100%{ transform: scaleY(1); }
+  0%, 88%, 100% { transform: scaleY(0); }  /* lid hidden = eyes open */
+  91%, 96%      { transform: scaleY(1); }  /* lid visible = eyes closed */
 }
 @keyframes archi-float {
   0%, 100% { transform: translateY(0); }
@@ -371,6 +370,26 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   40%  { transform: rotate(360deg) scale(1.25); }
   100% { transform: rotate(360deg) scale(1); }
 }
+
+.archi-breathe        { animation: archi-breathe 3s ease-in-out infinite; }
+.archi-blink          { animation: archi-blink 4s ease-in-out infinite; }
+.archi-jump           { animation: archi-jump 0.8s ease-in-out infinite; }
+.archi-arm-left-cheer { animation: archi-arm-left-cheer 0.8s ease-in-out infinite; }
+.archi-arm-right-cheer{ animation: archi-arm-right-cheer 0.8s ease-in-out infinite; }
+.archi-confetti-1     { animation: archi-confetti-1 1.4s ease-out infinite; }
+.archi-confetti-2     { animation: archi-confetti-2 1.4s ease-out infinite; }
+.archi-confetti-3     { animation: archi-confetti-3 1.4s ease-out infinite; }
+.archi-confetti-4     { animation: archi-confetti-4 1.4s ease-out infinite; }
+.archi-think-tilt     { animation: archi-think-tilt 2.8s ease-in-out infinite; }
+.archi-dot-appear     { animation: archi-dot-appear 2s ease-in-out infinite; }
+.archi-droop          { animation: archi-droop 2.5s ease-in-out infinite; }
+.archi-tear-fall      { animation: archi-tear-fall 1.8s ease-in infinite; }
+.archi-point-bounce   { animation: archi-point-bounce 1.5s ease-in-out infinite; }
+.archi-arm-point      { animation: archi-arm-point 1.5s ease-in-out infinite; }
+.archi-startle        { animation: archi-startle 1.8s ease-in-out infinite; }
+.archi-shock-line     { animation: archi-shock-line 0.6s ease-in-out infinite; }
+.archi-shadow-pulse   { animation: archi-shadow-pulse 2.8s ease-in-out infinite; }
+.archi-spin           { animation: archi-spin 1.2s ease-in-out infinite; }
 
 @keyframes confetti-fall {
   0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }

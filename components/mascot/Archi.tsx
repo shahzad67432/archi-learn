@@ -52,14 +52,29 @@ function Body({ className: extra }: { className?: string }) {
 
 function EyesNormal() {
   return (
-    <g className="archi-blink">
+    <>
+      {/* whites + pupils — always visible */}
       <ellipse cx={43} cy={62} rx={9} ry={10} fill="white" />
       <ellipse cx={44} cy={63} rx={5} ry={5.5} fill="#1C1917" />
       <circle cx={46} cy={60} r={2} fill="white" />
       <ellipse cx={67} cy={62} rx={9} ry={10} fill="white" />
       <ellipse cx={68} cy={63} rx={5} ry={5.5} fill="#1C1917" />
       <circle cx={70} cy={60} r={2} fill="white" />
-    </g>
+
+      {/* eyelids — scaleY(0) at rest so eyes stay open, scaleY(1) on blink */}
+      <rect
+        x={34} y={52} width={18} height={20} rx={2}
+        fill="#F97316"
+        className="archi-blink"
+        style={{ transformOrigin: '43px 52px' }}
+      />
+      <rect
+        x={58} y={52} width={18} height={20} rx={2}
+        fill="#F97316"
+        className="archi-blink"
+        style={{ transformOrigin: '67px 52px', animationDelay: '0.05s' }}
+      />
+    </>
   )
 }
 
