@@ -8,6 +8,7 @@ import {
   MultiPodVisual,
   ReconnectVisual,
 } from '@/components/concept/scenes/ZoneHardPartsVisuals'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 const CHAPTERS = [
   { id: 0, title: 'Zombie Connections', subtitle: 'Heartbeat, ping/pong, memory leaks' },
@@ -164,6 +165,19 @@ export default function ZoneHardParts({ concept, onComplete, isVisible = true }:
   const [showCode, setShowCode] = useState<boolean[]>([false, false, false, false])
   const [heartbeatActive, setHeartbeatActive] = useState(false)
   const [noRedis, setNoRedis] = useState(true)
+  const { showArchiTip, hideArchiTip } = useArchi()
+
+  useEffect(() => {
+    if (activeChapter === 0) {
+      showArchiTip('Zombie connections eat memory — let\'s fix them!', 'sad')
+    } else {
+      hideArchiTip()
+    }
+  }, [activeChapter, showArchiTip, hideArchiTip])
+
+  useEffect(() => {
+    return () => hideArchiTip()
+  }, [hideArchiTip])
   const scrollRef = useRef<HTMLDivElement>(null)
   const a = concept.color.accent
 

@@ -4,6 +4,9 @@ import './globals.css'
 import Providers from '@/components/Providers'
 import Nav from '@/components/layout/Nav'
 import PageTransition from '@/components/layout/PageTransition'
+import PageLoader from '@/components/ui/PageLoader'
+import { ArchiProvider } from '@/lib/context/ArchiContext'
+import ArchiFromContext from '@/components/mascot/ArchiFromContext'
 
 const syne = Syne({ subsets: ['latin'], weight: ['700', '800'], variable: '--font-syne', display: 'swap' })
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['300', '400', '500'], variable: '--font-dm-sans', display: 'swap' })
@@ -23,12 +26,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-scroll-behavior="smooth" className={[syne.variable, dmSans.variable, jetbrainsMono.variable].join(' ')}>
       <body suppressHydrationWarning>
-        <Providers>
-          <Nav />
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </Providers>
+        <PageLoader />
+        <ArchiProvider>
+          <Providers>
+            <Nav />
+            <PageTransition>
+              {children}
+            </PageTransition>
+            <ArchiFromContext />
+          </Providers>
+        </ArchiProvider>
       </body>
     </html>
   )

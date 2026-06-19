@@ -71,7 +71,7 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
     if (completedZones.size === ZONES.length) {
       markConceptComplete(concept.slug, concept.xpReward)
     }
-  }, [completedZones.size])
+  }, [completedZones.size, concept.slug, concept.xpReward, markConceptComplete])
 
   return (
     <div style={{ background: '#FFFBF7', minHeight: '100vh' }}>
@@ -140,7 +140,7 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
               <ZoneQuiz
                 concept={concept}
                 onComplete={() => markZoneComplete(4)}
-                onNext={() => router.push('/concepts')}
+                onNext={() => {}}
               />
             )}
           </div>

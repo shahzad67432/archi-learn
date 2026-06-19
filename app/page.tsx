@@ -1,11 +1,12 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useXPStore } from '@/lib/store/xpStore'
 import { concepts } from '@/data/concepts'
-import Archi from '@/components/mascot/Archi'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 const XP_ORDER: [number, string][] = [
   [0, 'Apprentice'],
@@ -21,10 +22,43 @@ const getNextMilestone = (level: string) => {
   return { nextXP: XP_ORDER[idx + 1][0], nextLevel: XP_ORDER[idx + 1][1] }
 }
 
+const IDLE_MOODS = ['thinking', 'pointing', 'cheer'] as const
+
 export default function Home() {
   const totalXP = useXPStore(s => s.totalXP)
   const level = useXPStore(s => s.level)
   const milestone = getNextMilestone(level)
+  const { setMood, showArchiTip, hideArchiTip } = useArchi()
+
+  useEffect(() => {
+    const scheduleNext = () => {
+      const delay = 8000 + Math.random() * 10000
+      return setTimeout(() => {
+        const randomMood = IDLE_MOODS[Math.floor(Math.random() * IDLE_MOODS.length)]
+        setMood(randomMood)
+        setTimeout(() => setMood('idle'), 1500)
+        scheduleNext()
+      }, delay)
+    }
+    const timer = scheduleNext()
+    return () => clearTimeout(timer)
+  }, [setMood])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (sessionStorage.getItem('archi-landing-tip')) return
+
+    const timer = setTimeout(() => {
+      showArchiTip("Try dragging a connection on the canvas 👆", 'pointing')
+      sessionStorage.setItem('archi-landing-tip', 'true')
+
+      setTimeout(() => {
+        hideArchiTip()
+      }, 4000)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [showArchiTip, hideArchiTip])
 
   return (
     <main className="h-screen overflow-hidden bg-canvas relative pt-[52px]">
@@ -315,20 +349,22 @@ export default function Home() {
 
           {/* Level card */}
           <motion.div
-            className="rounded-[12px] p-3"
+            className="flex items-center justify-between rounded-[12px] p-3"
             style={{ backgroundColor: '#FFF0E5', border: '0.5px solid #FDBA74' }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           >
-            <span className="font-dm-sans font-bold" style={{ fontSize: '10px', color: '#C05400' }}>
-              YOUR LEVEL
-            </span>
-            <span className="font-syne font-extrabold leading-none mt-1" style={{ fontSize: 'clamp(16px,2.5vw,20px)', color: '#C05400' }}>
-              {level}
-            </span>
+            <div className="flex flex-col">
+              <span className="font-dm-sans font-bold" style={{ fontSize: '10px', color: '#C05400' }}>
+                YOUR LEVEL
+              </span>
+              <span className="font-syne font-extrabold leading-none mt-1" style={{ fontSize: 'clamp(16px,2.5vw,20px)', color: '#C05400' }}>
+                {level}
+              </span>
+            </div>
             {milestone && (
-              <span className="font-dm-sans mt-1" style={{ fontSize: '11px', color: '#D97706' }}>
+              <span className="font-dm-sans" style={{ fontSize: '11px', color: '#D97706', textAlign: 'right', flexShrink: 0 }}>
                 {totalXP} / {milestone.nextXP} XP to {milestone.nextLevel}
               </span>
             )}
@@ -438,7 +474,6 @@ export default function Home() {
         </div>
       </div>
 
-      <Archi />
     </main>
   )
 }

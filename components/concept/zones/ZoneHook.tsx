@@ -1,9 +1,10 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Concept } from '@/data/concepts'
 import ZoneHookDiagram from '@/components/concept/scenes/ZoneHookDiagram'
 import ZoneHookPanels from '@/components/concept/scenes/ZoneHookPanels'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 interface Props {
   concept: Concept
@@ -13,6 +14,20 @@ interface Props {
 
 export default function ZoneHook({ concept, onComplete, onNext }: Props) {
   const [showRightPanel, setShowRightPanel] = useState(false)
+  const { showArchiTip, hideArchiTip } = useArchi()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!showRightPanel) {
+        showArchiTip('Drag the connection to explore how it works!', 'thinking')
+      }
+    }, 8000)
+    return () => clearTimeout(timer)
+  }, [showRightPanel, showArchiTip])
+
+  useEffect(() => {
+    return () => hideArchiTip()
+  }, [hideArchiTip])
 
   const rightColumnContent = (
     <>

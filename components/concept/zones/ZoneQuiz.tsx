@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
 import CertificateModal from '@/components/concept/CertificateModal'
 import SupportModal from '@/components/layout/SupportModal'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 interface Question {
   id: number
@@ -127,7 +128,7 @@ const QUESTIONS: Question[] = [
   },
 ]
 
-const PASS_THRESHOLD = 6
+const PASS_THRESHOLD = 7
 
 const TYPE_CONFIG: Record<string, { label: string; bg: string; color: string }> = {
   'concept':        { label: 'Concept',       bg: '#EEF2FF', color: '#4F46E5' },
@@ -153,6 +154,33 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
   const [showCertPrompt, setShowCertPrompt] = useState(false)
   const [dismissedBanner, setDismissedBanner] = useState(false)
   const [supportOpen, setSupportOpen] = useState(false)
+  const [certDismissed, setCertDismissed] = useState(false)
+  const { setMood, showArchiTip, hideArchiTip } = useArchi()
+
+  useEffect(() => {
+    const timeouts: ReturnType<typeof setTimeout>[] = []
+
+    if (answered && selected !== null) {
+      const isCorrect = QUESTIONS[current].correct === selected
+      if (isCorrect) {
+        setMood('cheer')
+        showArchiTip("Correct! +XP earned 🎉", 'cheer')
+        timeouts.push(setTimeout(() => {
+          setMood('idle')
+          hideArchiTip()
+        }, 2500))
+      } else {
+        setMood('sad')
+        showArchiTip("Not quite. Check the diagram above 👆", 'sad')
+        timeouts.push(setTimeout(() => {
+          setMood('idle')
+          hideArchiTip()
+        }, 3000))
+      }
+    }
+
+    return () => timeouts.forEach(clearTimeout)
+  }, [answered, current, selected, setMood, showArchiTip, hideArchiTip])
 
   const q = QUESTIONS[current]
   const isLast = current === QUESTIONS.length - 1
@@ -229,8 +257,10 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
         localStorage.setItem(`quiz-last-score-${concept.slug}`, JSON.stringify({ score: finalScore, total: QUESTIONS.length }))
       } catch {}
       if (finalScore < PASS_THRESHOLD) {
+        const until = Date.now() + 3600000
+        setRetryUntil(until)
         try {
-          localStorage.setItem(`quiz-retry-${concept.slug}`, String(Date.now() + 3600000))
+          localStorage.setItem(`quiz-retry-${concept.slug}`, String(until))
         } catch {}
       }
     }
@@ -390,12 +420,12 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
             {passed ? 'Nice work!' : 'Not quite yet'}
           </div>
 
-          {passed ? (
+          {passed && !certDismissed ? (
             <CertificateModal
               concept={concept}
               score={correctCount}
               total={QUESTIONS.length}
-              onComplete={onComplete}
+              onComplete={() => { setCertDismissed(true); onComplete() }}
               onNext={onNext}
             />
           ) : (

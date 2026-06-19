@@ -1,11 +1,13 @@
 'use client'
 
+import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import type { Concept } from '@/data/concepts'
 import ConceptDiagram from './ConceptDiagram'
 import { useXPStore } from '@/lib/store/xpStore'
-import { getStoredCertificate, generateCertificatePNG, downloadBlob } from '@/components/concept/CertificateUtils'
+import { getStoredCertificate, generateStoredCertPNG, downloadBlob } from '@/components/concept/CertificateUtils'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 const DIFFICULTY_STYLES: Record<string, { bg: string; color: string }> = {
   Beginner:     { bg: '#DCFCE7', color: '#16A34A' },
@@ -20,20 +22,41 @@ interface Props {
 
 function LockedCard({ concept, index }: Props) {
   const ds = DIFFICULTY_STYLES[concept.difficulty] ?? { bg: '#F3F4F6', color: '#78716C' }
+  const hoverTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const { showArchiTip, hideArchiTip } = useArchi()
+
+  const handleHoverStart = () => {
+    hoverTimer.current = setTimeout(() => {
+      showArchiTip("Complete the previous concept to unlock 🔒", 'pointing')
+    }, 600)
+  }
+
+  const handleHoverEnd = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current)
+    hideArchiTip()
+  }
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimer.current) clearTimeout(hoverTimer.current)
+      hideArchiTip()
+    }
+  }, [hideArchiTip])
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.04, ease: 'easeOut' }}
+      onMouseEnter={handleHoverStart}
+      onMouseLeave={handleHoverEnd}
       style={{
         background: 'var(--color-surface)',
         border: '1px solid var(--color-surface-raised)',
         borderRadius: 16,
         overflow: 'hidden',
         opacity: 0.6,
-        position: 'relative',
-        userSelect: 'none',
+        pointerEvents: 'none',
       }}
     >
       {/* Diagram area — muted */}
@@ -147,7 +170,7 @@ function PublishedCard({ concept, index }: Props) {
     e.stopPropagation()
     const data = certData
     if (!data) return
-    const blob = await generateCertificatePNG(data)
+    const blob = await generateStoredCertPNG(data)
     downloadBlob(blob, `archi-learn-${concept.slug}-certificate.png`)
   }
 

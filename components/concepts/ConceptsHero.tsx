@@ -64,8 +64,7 @@ export default function ConceptsHero({ totalConcepts, totalCategories, totalTime
           marginBottom: 32,
         }}
       >
-        Learn the building blocks that power systems at scale — from a hundred users to a hundred million.
-        Each concept is explained clearly, then shown in action.
+        Learn the core building blocks behind scalable systems. Start with the fundamentals, understand how they work, and see how they're used to build applications that grow from hundreds of users to hundreds of millions.
       </p>
 
       <div

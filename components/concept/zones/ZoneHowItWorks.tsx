@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
+import { useArchi } from '@/lib/context/ArchiContext'
 
 interface Props {
   concept: Concept
@@ -64,6 +65,31 @@ const STEPS = [
 export default function ZoneHowItWorks({ concept, onComplete, onNext }: Props) {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
+  const { setMood, showArchiTip, hideArchiTip } = useArchi()
+
+  useEffect(() => {
+    const timeouts: ReturnType<typeof setTimeout>[] = []
+
+    if (step === 4) {
+      setMood('sad')
+      hideArchiTip()
+    } else if (step === 5) {
+      timeouts.push(setTimeout(() => {
+        setMood('cheer')
+        showArchiTip("The tunnel is alive! 🎉", 'cheer')
+      }, 600))
+      timeouts.push(setTimeout(() => {
+        hideArchiTip()
+      }, 3600))
+    } else if (step === 6) {
+      setMood('celebrating')
+      hideArchiTip()
+    } else {
+      hideArchiTip()
+    }
+
+    return () => timeouts.forEach(clearTimeout)
+  }, [step, setMood, showArchiTip, hideArchiTip])
 
   const goNext = useCallback(() => {
     if (step < STEPS.length - 1) {

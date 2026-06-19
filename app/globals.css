@@ -276,3 +276,126 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-4px); }
 }
+
+/* ══════════════════════════════════════
+   ARCHI — SVG MASCOT KEYFRAMES
+   Animation classes used by SVG-based Archi
+══════════════════════════════════════ */
+
+@keyframes archi-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.03); }
+}
+@keyframes archi-blink {
+  0%, 94%  { transform: scaleY(1); }
+  95%, 97% { transform: scaleY(0.1); }
+  98%, 100%{ transform: scaleY(1); }
+}
+@keyframes archi-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+@keyframes archi-jump {
+  0%   { transform: translateY(0) scale(1); }
+  30%  { transform: translateY(-18%) scale(1); }
+  60%  { transform: translateY(-18%) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes archi-arm-left-cheer {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-140deg); }
+}
+@keyframes archi-arm-right-cheer {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(140deg); }
+}
+@keyframes archi-confetti-1 {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-25px, -35px) rotate(180deg); opacity: 0; }
+}
+@keyframes archi-confetti-2 {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(30px, -40px) rotate(-180deg); opacity: 0; }
+}
+@keyframes archi-confetti-3 {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(-20px, -50px) rotate(90deg) scale(0); opacity: 0; }
+}
+@keyframes archi-confetti-4 {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(35px, -30px) rotate(-90deg) scale(0); opacity: 0; }
+}
+@keyframes archi-think-tilt {
+  0%, 100% { transform: rotate(0deg); }
+  25%, 75% { transform: rotate(6deg); }
+}
+@keyframes archi-dot-appear {
+  0%   { transform: scale(0); opacity: 0; }
+  30%  { transform: scale(1); opacity: 1; }
+  70%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes archi-droop {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6%); }
+}
+@keyframes archi-tear-fall {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(30px) scale(0.6); opacity: 0; }
+}
+@keyframes archi-point-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes archi-arm-point {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(-20deg); }
+}
+@keyframes archi-startle {
+  0%   { transform: scale(1); }
+  20%  { transform: scale(1.12); }
+  40%  { transform: scale(0.97); }
+  60%  { transform: scale(1); }
+}
+@keyframes archi-shock-line {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes archi-shadow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 0.3; }
+}
+@keyframes archi-spin {
+  0%   { transform: rotate(0deg) scale(1); }
+  40%  { transform: rotate(360deg) scale(1.25); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  pointer-events: none;
+  z-index: 2147483646;
+  animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  pointer-events: none;
+  z-index: 2147483646;
+  animation: confetti-fall linear forwards;
+}
