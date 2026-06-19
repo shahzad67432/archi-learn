@@ -1,5 +1,3 @@
-'use client'
-
 interface Props {
   totalConcepts: number
   totalCategories: number

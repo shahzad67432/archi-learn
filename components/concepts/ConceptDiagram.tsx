@@ -1,5 +1,3 @@
-'use client'
-
 import type { Concept } from '@/data/concepts'
 
 interface Props {
