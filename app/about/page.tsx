@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Mail, Wallet, Play } from 'lucide-react'
+import { Mail, Play } from 'lucide-react'
+import FuelTheBuild from '@/components/about/FuelTheBuild'
 
 const SOCIALS = [
   {
@@ -275,105 +276,7 @@ export default function AboutPage() {
           </div>
         </motion.div>
 
-        {/* ════════════════════════════════════════
-            SECTION 4 — Support / Crypto QRs
-           ════════════════════════════════════════ */}
-        <motion.div {...fadeUp(0.55)} style={{ paddingBottom: 40 }}>
-          <div
-            style={{
-              borderRadius: 16,
-              border: '0.5px solid rgba(249, 115, 22, 0.15)',
-              backgroundColor: '#FFFBF7',
-              padding: 'clamp(24px, 4vw, 44px) clamp(20px, 4vw, 48px)',
-            }}
-          >
-            <div className="flex flex-col items-center" style={{ marginBottom: 28 }}>
-              <Wallet size={24} style={{ color: '#F97316' }} />
-              <h2
-                className="font-syne font-extrabold"
-                style={{ fontSize: 'clamp(20px, 2.5vw, 28px)', color: '#1C1917', marginTop: 10, letterSpacing: '-0.02em' }}
-              >
-                Fuel the Build
-              </h2>
-              <p
-                className="font-dm-sans text-center"
-                style={{ fontSize: 13, color: '#A8A29E', lineHeight: 1.6, maxWidth: 420, marginTop: 6 }}
-              >
-                If Archi.learn helped you level up, consider supporting future lessons
-                via crypto. Every contribution keeps this project built in public.
-              </p>
-            </div>
-
-            <div
-              className="flex flex-col sm:flex-row items-center justify-center"
-              style={{ gap: 'clamp(16px, 3vw, 32px)' }}
-            >
-              {/* Phantom */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex flex-col items-center"
-                style={{
-                  flex: 1, maxWidth: 280, width: '100%',
-                  borderRadius: 12, overflow: 'hidden',
-                  border: '1px solid #E7E5E4',
-                  backgroundColor: '#FAFAF9',
-                }}
-              >
-                <div style={{
-                  width: '100%',
-                  background: 'linear-gradient(135deg, #AB9FF2, #7B6FE6)',
-                  padding: '10px 16px',
-                  display: 'flex', alignItems: 'center', gap: 8,
-                }}>
-                  <span style={{ fontSize: 18 }}>👻</span>
-                  <span className="font-syne font-bold" style={{ fontSize: 14, color: '#FFFBF7' }}>Phantom Wallet</span>
-                </div>
-                <div style={{ padding: 16, width: '100%', display: 'flex', justifyContent: 'center' }}>
-                  <div style={{ position: 'relative', width: 200, height: 200 }}>
-                    <Image
-                      src="/aboutus/PhantomQR.jpeg"
-                      alt="Phantom Wallet QR"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Binance */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex flex-col items-center"
-                style={{
-                  flex: 1, maxWidth: 280, width: '100%',
-                  borderRadius: 12, overflow: 'hidden',
-                  border: '1px solid #E7E5E4',
-                  backgroundColor: '#FAFAF9',
-                }}
-              >
-                <div style={{
-                  width: '100%',
-                  background: 'linear-gradient(135deg, #F0B90B, #CC9A00)',
-                  padding: '10px 16px',
-                  display: 'flex', alignItems: 'center', gap: 8,
-                }}>
-                  <span style={{ fontSize: 18 }}>🟡</span>
-                  <span className="font-syne font-bold" style={{ fontSize: 14, color: '#1C1917' }}>Binance Wallet</span>
-                </div>
-                <div style={{ padding: 16, width: '100%', display: 'flex', justifyContent: 'center' }}>
-                  <div style={{ position: 'relative', width: 200, height: 200 }}>
-                    <Image
-                      src="/aboutus/BinanceQR.jpeg"
-                      alt="Binance Wallet QR"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
+        <FuelTheBuild />
 
         {/* ════════════════════════════════════════
             SECTION 5 — Footer
