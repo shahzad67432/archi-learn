@@ -1,6 +1,5 @@
 'use client'
 
-import html2canvas from 'html2canvas'
 import { createRoot } from 'react-dom/client'
 import { flushSync } from 'react-dom'
 import CertificateConcept2 from '@/components/certificates/CertificateConcept2'
@@ -14,6 +13,7 @@ export interface CertData {
 }
 
 export async function generateCertificatePNG(element: HTMLElement): Promise<Blob> {
+  const html2canvas = (await import('html2canvas')).default
   await document.fonts.ready
   return html2canvas(element, {
     scale: 2,
