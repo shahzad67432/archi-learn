@@ -1,16 +1,18 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import type { Concept } from '@/data/concepts'
 import ConceptTopBar from '@/components/concept/ConceptTopBar'
 import ProgressSpine from '@/components/concept/ProgressSpine'
-import ZoneHook from '@/components/concept/zones/ZoneHook'
-import ZoneHowItWorks from '@/components/concept/zones/ZoneHowItWorks'
-import ZoneHardParts from '@/components/concept/zones/ZoneHardParts'
-import ZoneTryIt from '@/components/concept/zones/ZoneTryIt'
-import ZoneQuiz from '@/components/concept/zones/ZoneQuiz'
 import { useXPStore } from '@/lib/store/xpStore'
+
+const ZoneHook = dynamic(() => import('@/components/concept/zones/ZoneHook'))
+const ZoneHowItWorks = dynamic(() => import('@/components/concept/zones/ZoneHowItWorks'))
+const ZoneHardParts = dynamic(() => import('@/components/concept/zones/ZoneHardParts'))
+const ZoneTryIt = dynamic(() => import('@/components/concept/zones/ZoneTryIt'))
+const ZoneQuiz = dynamic(() => import('@/components/concept/zones/ZoneQuiz'))
 
 const ZONES = [
   { id: 0, label: 'The Problem',   icon: '⚡' },
