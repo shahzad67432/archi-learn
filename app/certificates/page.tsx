@@ -27,6 +27,7 @@ export default function CertificatesPage() {
           <CertificateConcept2 />
         </motion.div>
 
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,7 +37,9 @@ export default function CertificatesPage() {
           <h2 className="font-syne font-bold text-lg text-ink mb-4">Mascot Preview</h2>
           <ArchiMascotVisual />
         </motion.div>
+
       </div>
     </main>
   )
 }
+

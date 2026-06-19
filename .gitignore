@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# unused public assets
+public/Remix of Untitled file.svg
+public/archi-mascot.svg
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
