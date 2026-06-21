@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 130" width="220" height="260">
+  <style>
+    @keyframes archi-breathe {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.03); }
+    }
+    @keyframes archi-blink {
+      0%, 88%, 100% { transform: scaleY(0); }
+      91%, 96%      { transform: scaleY(1); }
+    }
+    @keyframes archi-shadow-pulse {
+      0%, 100% { opacity: 0.1; transform: scale(1); }
+      50%      { opacity: 0.06; transform: scale(0.9); }
+    }
+    .archi-breathe {
+      animation: archi-breathe 3s ease-in-out infinite;
+      transform-origin: 55px 80px;
+    }
+    .archi-blink {
+      animation: archi-blink 4s ease-in-out infinite;
+      transform-origin: 43px 52px;
+    }
+    .archi-blink-delayed {
+      animation: archi-blink 4s ease-in-out infinite;
+      animation-delay: 0.05s;
+      transform-origin: 67px 52px;
+    }
+    .archi-shadow-pulse {
+      animation: archi-shadow-pulse 2.8s ease-in-out infinite;
+      transform-origin: 55px 122px;
+    }
+  </style>
+
+  <g class="archi-breathe">
+    <!-- shadow -->
+    <ellipse cx="55" cy="122" rx="22" ry="5" fill="rgba(0,0,0,0.1)" class="archi-shadow-pulse" />
+
+    <!-- hat -->
+    <ellipse cx="55" cy="30" rx="22" ry="5" fill="#E05800" opacity="0.9" />
+    <path d="M34 30 Q34 14 55 14 Q76 14 76 30Z" fill="#F97316" />
+    <path d="M38 26 Q55 20 72 26" fill="none" stroke="#E05800" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+
+    <!-- body -->
+    <path d="M22 65 Q18 45 35 38 Q45 32 55 33 Q65 32 75 38 Q92 45 88 65 Q92 85 82 98 Q70 112 55 112 Q40 112 28 98 Q18 85 22 65Z" fill="#F97316" />
+    <path d="M30 70 Q26 55 38 46 Q45 40 55 41" fill="none" stroke="#E05800" stroke-width="3" stroke-linecap="round" opacity="0.25" />
+
+    <!-- arms -->
+    <path d="M28 72 Q16 76 14 85 Q13 91 19 92 Q24 93 28 85" fill="#F97316" stroke="#E05800" stroke-width="0.5" opacity="0.9" />
+    <path d="M82 72 Q94 76 96 85 Q97 91 91 92 Q86 93 82 85" fill="#F97316" stroke="#E05800" stroke-width="0.5" opacity="0.9" />
+
+    <!-- eyes -->
+    <ellipse cx="43" cy="62" rx="9" ry="10" fill="white" />
+    <ellipse cx="44" cy="63" rx="5" ry="5.5" fill="#1C1917" />
+    <circle cx="46" cy="60" r="2" fill="white" />
+    <ellipse cx="67" cy="62" rx="9" ry="10" fill="white" />
+    <ellipse cx="68" cy="63" rx="5" ry="5.5" fill="#1C1917" />
+    <circle cx="70" cy="60" r="2" fill="white" />
+
+    <!-- eyelids (blink) -->
+    <rect x="34" y="52" width="18" height="20" rx="2" fill="#F97316" class="archi-blink" />
+    <rect x="58" y="52" width="18" height="20" rx="2" fill="#F97316" class="archi-blink-delayed" />
+
+    <!-- mouth -->
+    <path d="M46 80 Q55 87 64 80" fill="none" stroke="#1C1917" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- cheeks -->
+    <ellipse cx="35" cy="75" rx="6" ry="4" fill="#FF8C42" opacity="0.3" />
+    <ellipse cx="75" cy="75" rx="6" ry="4" fill="#FF8C42" opacity="0.3" />
+  </g>
+</svg>
