@@ -380,6 +380,43 @@ export const concepts: Concept[] = [
     callout: { strong: 'Stateless design', text: 'Is the prerequisite. If session data lives on a single server, you cannot route users to any machine freely. Move state to a shared cache or database first.' },
   },
   {
+    slug: 'redis',
+    number: 14,
+    title: 'Redis',
+    tagline: 'An in-memory data store that makes your application insanely fast',
+    problem: "Every request hits the database. Reads, writes, joins — all disk. When traffic spikes, the database becomes the bottleneck. Your app slows down, queries queue up, and users refresh. Redis goes in front — an in-memory cache that serves data in under a millisecond. It doesn't replace the database. It protects it.",
+    difficulty: 'Intermediate',
+    category: 'store',
+    xpReward: 75,
+    tags: ['Cache', 'Data-structures', 'In-memory'],
+    illustration: '/illustrations/redis.svg',
+    color: { bg: '#FFF1F2', border: '#FDA4AF', accent: '#DC2626' },
+    published: true,
+    readTime: 35,
+    rating: 4.8,
+    detailSections: [
+      {
+        title: 'Core patterns',
+        items: [
+          'Cache-aside — app checks cache first; on miss, loads from DB and populates.',
+          'Write-through — write to cache and DB simultaneously. Consistent but slower.',
+          'Write-behind — write to cache, flush to DB asynchronously. Fast but risky.',
+        ],
+      },
+      {
+        title: 'Data structures',
+        items: [
+          'Strings — simple key-value pairs, great for counters and sessions.',
+          'Hashes — map of fields, perfect for storing objects like user profiles.',
+          'Lists — ordered collections, used for message queues and timelines.',
+          'Sets — unordered unique values, great for tagging and deduplication.',
+          'Sorted Sets — ranked sets, used for leaderboards and rate limiting.',
+        ],
+      },
+    ],
+    callout: { strong: 'Redis is not your primary database', text: 'It keeps everything in RAM. Use it as a cache, session store, or message broker. Your durable data belongs in PostgreSQL or similar. Redis makes them fast.' },
+  },
+  {
     slug: 'cdn',
     number: 13,
     title: 'CDN',

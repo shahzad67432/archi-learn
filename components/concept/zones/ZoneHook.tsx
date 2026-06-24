@@ -2,8 +2,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import type { Concept } from '@/data/concepts'
-import ZoneHookDiagram from '@/components/concept/scenes/ZoneHookDiagram'
-import ZoneHookPanels from '@/components/concept/scenes/ZoneHookPanels'
+import { getScenes } from '@/components/concept/scenes/sceneRegistry'
 import { useArchi } from '@/lib/context/ArchiContext'
 
 interface Props {
@@ -15,6 +14,7 @@ interface Props {
 export default function ZoneHook({ concept, onComplete, onNext }: Props) {
   const [showRightPanel, setShowRightPanel] = useState(false)
   const { showArchiTip, hideArchiTip } = useArchi()
+  const scenes = getScenes(concept.slug)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,57 +29,9 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
     return () => hideArchiTip()
   }, [hideArchiTip])
 
-  const rightColumnContent = (
-    <>
-      {/* Real-Time Layer — isometric 2D architectural diagram */}
-      <motion.div
-        className="flex flex-col min-h-0"
-        style={{
-          flex: 5,
-          borderRadius: 14,
-          padding: 'clamp(14px, 2vw, 20px)',
-        }}
-        initial={{ opacity: 0, x: 16 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-      >
-        <span
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: '#C4B5FD',
-            marginBottom: 6,
-            display: 'block',
-          }}
-        >
-          The Real-Time Layer
-        </span>
-
-        <div
-          style={{
-            flex: 1,
-            minHeight: 0,
-            position: 'relative',
-          }}
-        >
-          <ZoneHookDiagram accentColor={concept.color.accent} />
-        </div>
-      </motion.div>
-
-      {/* Bottom panels grid */}
-      <motion.div
-        className="grid grid-cols-2 min-h-0 pb-6 pl-7"
-        style={{ flex: 3, gap: 'clamp(6px, 1vw, 10px)' }}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.3 }}
-      >
-        <ZoneHookPanels accentColor={concept.color.accent} />
-      </motion.div>
-    </>
-  )
+  const rightColumnContent = scenes ? (
+    <scenes.HookVisual accentColor={concept.color.accent} />
+  ) : undefined
 
   return (
     <div
@@ -185,6 +137,7 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
           <div style={{ height: '0.5px', background: 'rgba(0,0,0,0.08)' }} />
 
           {/* Drop cap paragraph */}
+          {scenes && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -208,14 +161,11 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
                 marginTop: 4,
               }}
             >
-              H
+              {scenes.hookParagraph.charAt(0)}
             </span>
-            TTP spoils you. A request comes in, a response goes out,
-            the connection closes. Clean. Automatic. You never think
-            about it. WebSocket is a tunnel that stays open —
-            indefinitely. Both sides talk whenever they want, without
-            asking permission first.
+            {scenes.hookParagraph.slice(1)}
           </motion.div>
+          )}
 
           {/* Properties list */}
           <motion.div
@@ -225,20 +175,7 @@ export default function ZoneHook({ concept, onComplete, onNext }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.25 }}
           >
-            {[
-              {
-                label: 'Full-duplex communication',
-                sub: 'Both sides send simultaneously — like a phone call, not walkie-talkies',
-              },
-              {
-                label: 'Single TCP connection',
-                sub: 'One handshake, then the tunnel stays open for the entire session',
-              },
-              {
-                label: '2–14 bytes overhead per message',
-                sub: 'HTTP sends 200–800 bytes of headers every single time',
-              },
-            ].map((p, i) => (
+            {scenes && scenes.hookProperties.map((p, i) => (
               <div key={i} className="flex items-start gap-2">
                 <div
                   style={{

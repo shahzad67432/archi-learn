@@ -3,130 +3,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Concept } from '@/data/concepts'
+import { getScenes } from '@/components/concept/scenes/sceneRegistry'
 import CertificateModal from '@/components/concept/CertificateModal'
 import SupportModal from '@/components/layout/SupportModal'
 import { useArchi } from '@/lib/context/ArchiContext'
-
-interface Question {
-  id: number
-  type: 'concept' | 'scenario' | 'system-design'
-  question: string
-  options: { id: string; text: string }[]
-  correct: string
-}
-
-const QUESTIONS: Question[] = [
-  {
-    id: 1, type: 'concept',
-    question: 'What HTTP header pair does a client send to initiate a WebSocket upgrade?',
-    options: [
-      { id: 'A', text: 'Connection: Upgrade + Upgrade: websocket' },
-      { id: 'B', text: 'Content-Type: application/json' },
-      { id: 'C', text: 'Accept: text/html' },
-      { id: 'D', text: 'Transfer-Encoding: chunked' },
-    ],
-    correct: 'A',
-  },
-  {
-    id: 2, type: 'concept',
-    question: 'What status code does the server respond with to confirm a successful WebSocket handshake?',
-    options: [
-      { id: 'A', text: '200 OK' },
-      { id: 'B', text: '101 Switching Protocols' },
-      { id: 'C', text: '426 Upgrade Required' },
-      { id: 'D', text: '301 Moved Permanently' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 3, type: 'system-design',
-    question: 'In the system design from Act 1, which service should receive traffic directly from the CDN?',
-    options: [
-      { id: 'A', text: 'App Server' },
-      { id: 'B', text: 'API Gateway / LB' },
-      { id: 'C', text: 'AI Orchestrator' },
-      { id: 'D', text: 'Redis Cache' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 4, type: 'scenario',
-    question: 'A real-time dashboard polls every 2 seconds using HTTP. Users report sluggishness and battery drain. What is the root cause?',
-    options: [
-      { id: 'A', text: 'The server hardware is underpowered' },
-      { id: 'B', text: 'HTTP headers add ~800 bytes per request, keeping the radio active pointlessly' },
-      { id: 'C', text: 'JavaScript parses JSON responses too slowly' },
-      { id: 'D', text: 'The Wi-Fi connection has high latency' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 5, type: 'concept',
-    question: 'What key capability does WebSocket have that Server-Sent Events (SSE) lack?',
-    options: [
-      { id: 'A', text: 'Binary data support' },
-      { id: 'B', text: 'Full-duplex communication — client sends messages anytime' },
-      { id: 'C', text: 'Encrypted transport via TLS' },
-      { id: 'D', text: 'Standardized by the W3C' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 6, type: 'scenario',
-    question: 'A WebSocket server restarts and 5000 clients reconnect within 100ms. CPU spikes to 100%, crashing the server again. What prevents this?',
-    options: [
-      { id: 'A', text: 'Add more RAM to the server' },
-      { id: 'B', text: 'Exponential backoff with random jitter on reconnection' },
-      { id: 'C', text: 'Switch from WebSocket to HTTP/2' },
-      { id: 'D', text: 'Use a different load balancing algorithm' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 7, type: 'system-design',
-    question: 'In Act 1, what happens when Browser connects directly to API Gateway, bypassing the CDN?',
-    options: [
-      { id: 'A', text: 'The page loads faster with fewer network hops' },
-      { id: 'B', text: 'DDoS traffic hits the raw gateway — infrastructure team paged at 2 AM' },
-      { id: 'C', text: 'Images fail to load without CDN compression' },
-      { id: 'D', text: 'The connection auto-upgrades to WebSocket' },
-    ],
-    correct: 'B',
-  },
-  {
-    id: 8, type: 'scenario',
-    question: 'You have 5 WebSocket server pods behind a round-robin load balancer. A user disconnects briefly, reconnects to a different pod, and loses session state. What is the correct fix?',
-    options: [
-      { id: 'A', text: 'Use Redis Pub/Sub to share session state across pods' },
-      { id: 'B', text: 'Increase the WebSocket timeout to 24 hours' },
-      { id: 'C', text: 'Switch from WebSocket to HTTP long polling' },
-      { id: 'D', text: 'Route all traffic to a single pod' },
-    ],
-    correct: 'A',
-  },
-  {
-    id: 9, type: 'concept',
-    question: 'What mechanism detects WebSocket connections that are dead on the client side but still open on the server?',
-    options: [
-      { id: 'A', text: 'Garbage collection' },
-      { id: 'B', text: 'Connection pooling' },
-      { id: 'C', text: 'Heartbeat / ping-pong frames' },
-      { id: 'D', text: 'Reference counting' },
-    ],
-    correct: 'C',
-  },
-  {
-    id: 10, type: 'system-design',
-    question: 'What is the correct end-to-end request flow from Browser to the LLM API in the Act 1 architecture?',
-    options: [
-      { id: 'A', text: 'Browser → API GW → LLM' },
-      { id: 'B', text: 'Browser → CDN → API GW → WS Server → App Server → Orchestrator → LLM' },
-      { id: 'C', text: 'Browser → CDN → WS Server → App Server → LLM' },
-      { id: 'D', text: 'Browser → WS Server → App Server → Orchestrator → LLM' },
-    ],
-    correct: 'B',
-  },
-]
 
 const PASS_THRESHOLD = 7
 
@@ -143,6 +23,8 @@ interface Props {
 }
 
 export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
+  const scenes = getScenes(concept.slug)
+  const QUESTIONS = scenes?.quizQuestions ?? []
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
@@ -285,6 +167,8 @@ export default function ZoneQuiz({ concept, onComplete, onNext }: Props) {
     setResults({})
     setFinished(false)
   }, [concept.slug])
+
+  if (!QUESTIONS.length) return null
 
   // ── Locked screen (retry timeout) ──
   if (retryUntil) {

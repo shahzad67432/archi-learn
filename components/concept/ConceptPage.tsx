@@ -1,17 +1,21 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import type { Concept } from '@/data/concepts'
+import { getScenes } from '@/components/concept/scenes/sceneRegistry'
+import { registerWebSocketScenes } from '@/components/concept/scenes/websockets/WSRegistration'
+import { registerRedisScenes } from '@/components/concept/scenes/redis/RedisRegistration'
 import ConceptTopBar from '@/components/concept/ConceptTopBar'
 import ProgressSpine from '@/components/concept/ProgressSpine'
 import { useXPStore } from '@/lib/store/xpStore'
 
+registerWebSocketScenes()
+registerRedisScenes()
+
 const ZoneHook = dynamic(() => import('@/components/concept/zones/ZoneHook'))
 const ZoneHowItWorks = dynamic(() => import('@/components/concept/zones/ZoneHowItWorks'))
 const ZoneHardParts = dynamic(() => import('@/components/concept/zones/ZoneHardParts'))
-const ZoneTryIt = dynamic(() => import('@/components/concept/zones/ZoneTryIt'))
 const ZoneQuiz = dynamic(() => import('@/components/concept/zones/ZoneQuiz'))
 
 const ZONES = [
@@ -23,11 +27,11 @@ const ZONES = [
 ]
 
 export default function ConceptPage({ concept }: { concept: Concept }) {
-  const router = useRouter()
   const [activeZone, setActiveZone] = useState(0)
   const [completedZones, setCompletedZones] = useState<Set<number>>(new Set())
   const scrollRef = useRef<HTMLDivElement>(null)
   const markConceptComplete = useXPStore(s => s.markConceptComplete)
+  const scenes = getScenes(concept.slug)
 
   const markZoneComplete = (index: number) => {
     setCompletedZones(prev => new Set([...prev, index]))
@@ -67,7 +71,10 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
         markZoneComplete(i)
       }
     })
-  }, [])
+    if (!scenes?.TryItContent) {
+      markZoneComplete(3)
+    }
+  }, [scenes])
 
   useEffect(() => {
     if (completedZones.size === ZONES.length) {
@@ -133,11 +140,13 @@ export default function ConceptPage({ concept }: { concept: Concept }) {
                 isVisible={activeZone === 2}
               />
             ) : i === 3 ? (
-              <ZoneTryIt
-                concept={concept}
-                onComplete={() => markZoneComplete(3)}
-                onNext={() => scrollToZone(4)}
-              />
+              scenes?.TryItContent ? (
+                <scenes.TryItContent
+                  concept={concept}
+                  onComplete={() => markZoneComplete(3)}
+                  onNext={() => scrollToZone(4)}
+                />
+              ) : null
             ) : (
               <ZoneQuiz
                 concept={concept}

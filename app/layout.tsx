@@ -13,7 +13,6 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], weight: ['400'], vari
 export const metadata: Metadata = {
   title: 'Archi.learn — Master System Design Through Play',
   description: 'An interactive, gamified platform for mastering system design concepts. Drag, connect, learn.',
-  icons: [{ rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' }],
   openGraph: {
     title: 'Archi.learn',
     description: 'Learn system design through interactive play, not articles.',
