@@ -10,8 +10,8 @@ interface Props {
   onClose: () => void
 }
 
-const PHANTOM_ADDRESS = 'REPLACE_WITH_REAL_SOLANA_ADDRESS'
-const BINANCE_ADDRESS = 'REPLACE_WITH_REAL_BNB_ADDRESS'
+const PHANTOM_ADDRESS = '2jKZYAE3eKpbAmUYRJTMMc98ibhvzBJJrpNLyJ83odvg'
+const BINANCE_ADDRESS = '0x3b5ed7e935588CF9e1fEa3D865563B20bDF6647d'
 
 function truncateAddress(address: string, head = 4, tail = 4) {
   if (address.length <= head + tail) return address
